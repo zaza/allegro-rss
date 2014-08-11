@@ -1,0 +1,6 @@
+{
+  "name": "Allegro RSS",
+  "description": "An RSS feed for Allegro search results",
+  "image": "heroku/java",
+  "addons": [ ]
+}
