@@ -1,5 +1,6 @@
 package com.github.zaza.allegro;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 import java.rmi.RemoteException;
@@ -26,17 +27,21 @@ import com.allegro.webapi.ServiceServiceLocator;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Range;
 
+import spark.Request;
+
 public class AllegroClient {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AllegroClient.class);
 
 	// TODO: remove when done smoke-testing
 	public static void main(String[] args) throws Exception {
-		AllegroClient client = new AllegroClient();
+		AllegroClient client = new AllegroClient(args[0]);
 		client.checkVersionKey();
 		client.login();
-		client.search(FilterBuilder.search("mata 4cm").price(Range.lessThan(100)).condition(Condition.NEW).build());
+		//client.search(FilterBuilder.search("mata 4cm").price(Range.lessThan(100)).condition(Condition.NEW).build());
+		client.search(FilterBuilder.search("nilfisk king").condition(Condition.USED).build());
 	}
+	
 	private static final int POLAND = 1; // TODO: doGetCountries
 
 	private static final int WEBAPI_VERSION_KEY = 1488971865;
@@ -50,19 +55,29 @@ public class AllegroClient {
 
 	private String sessionHandle;
 
-	public AllegroClient() throws ServiceException {
-		login = System.getenv().get("ALLEGRO_LOGIN");
-		password = System.getenv().get("ALLEGRO_PASSWORD");
-		webApiKey = System.getenv().get("ALLEGRO_WEBAPI_KEY");
+	public AllegroClient(Request req) throws ServiceException, RemoteException {
+		this(req.queryParams("wak"));
+		login();
+	}
+	
+	private AllegroClient(String webApiKey) throws ServiceException {
+		this.login = System.getenv().get("ALLEGRO_LOGIN");
+		this.password = System.getenv().get("ALLEGRO_PASSWORD");
+		this.webApiKey = webApiKey;
 
 		ServiceServiceLocator service = new ServiceServiceLocator();
 		allegro = service.getservicePort();
 	}
 
-	private void checkVersionKey() throws RemoteException, ServiceException {
+	public long getVersionKey() throws RemoteException, ServiceException {
 		LOG.trace("Receving key version... ");
 		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
 		LOG.trace("done. Current version key={}", verKey);
+		return verKey;
+	}
+
+	private void checkVersionKey() throws RemoteException, ServiceException {
+		long verKey = getVersionKey();
 		if (verKey != WEBAPI_VERSION_KEY) {
 			LOG.warn("Version key received from Allegro doesn't match the key in the app: {} vs {}", verKey,
 					WEBAPI_VERSION_KEY);
@@ -75,8 +90,21 @@ public class AllegroClient {
 						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, WEBAPI_VERSION_KEY))
 				.getSessionHandlePart();
 	}
+	
+	public List<ItemsListType> search(Request req) throws RemoteException {
+		String query = req.queryParams("q");
+		checkArgument(query !=  null);
+		FilterBuilder builder = FilterBuilder.search(query);
+		String price = req.queryParams("p");
+		if (price != null)
+			builder.price(Range.atMost(Integer.valueOf(price)));
+		String condition = req.queryParams("c");
+		if (condition != null)
+			builder.condition(Condition.valueOf(condition.toUpperCase()));
+		return search(builder.build());
+	} 
 
-	private void search(ArrayOfFilteroptionstype filter) throws RemoteException {
+	private List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {
 		checkState(sessionHandle != null);
 		int offset = 0;
 		List<ItemsListType> result = new ArrayList<>();
@@ -84,8 +112,9 @@ public class AllegroClient {
 			offset += RESULT_SIZE;
 		}
 		for (ItemsListType item : result) {
-			LOG.debug("{} :: {}", item.getItemTitle(), item.getPriceInfo().getItem(0).getPriceValue());
+			LOG.debug("{}, {} :: {}", item.getItemId(), item.getItemTitle(), item.getPriceInfo().getItem(0).getPriceValue());
 		}
+		return result;
 	}
 
 	private boolean search(ArrayOfFilteroptionstype filter, List<ItemsListType> result, int offset, int size)

@@ -1,14 +1,20 @@
 package com.github.zaza;
 
+import static java.lang.String.format;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.allegro.webapi.ArrayOfPhotoinfotype;
+import com.allegro.webapi.ArrayOfPriceinfotype;
+import com.allegro.webapi.ItemsListType;
+import com.allegro.webapi.UserInfoType;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndContentImpl;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -19,49 +25,73 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedOutput;
 
 public class FeedWriter {
-	
-	 private static final DateFormat DATE_PARSER = new SimpleDateFormat("yyyy-MM-dd");
-	
 
-String write() throws ParseException, IOException, FeedException {
-	SyndFeed feed = new SyndFeedImpl();
-	feed.setFeedType("rss_2.0");
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, d MMM yyyy HH:mm");
 
-	feed.setTitle("Sample Feed (created with ROME)");
-	feed.setLink("http://rome.dev.java.net");
-	feed.setDescription("This feed has been created using ROME (Java syndication utilities");
-	
-	List<SyndEntry> entries = new ArrayList<>();
-	SyndEntry entry;
-	SyndContent description;
+	public String write(List<ItemsListType> items) throws IOException, FeedException {
+		SyndFeed feed = new SyndFeedImpl();
+		feed.setFeedType("rss_2.0");
 
-	entry = new SyndEntryImpl();
-	entry.setTitle("ROME v1.0");
-	entry.setLink("http://wiki.java.net/bin/view/Javawsxml/Rome01");
-	entry.setPublishedDate(DATE_PARSER.parse("2004-06-08"));
-	description = new SyndContentImpl();
-	description.setType("text/plain");
-	description.setValue("Initial release of ROME");
-	entry.setDescription(description);
-	entries.add(entry);
-	entry = new SyndEntryImpl();
-	entry.setTitle("ROME v3.0");
-	entry.setLink("http://wiki.java.net/bin/view/Javawsxml/Rome03");
-	entry.setPublishedDate(DATE_PARSER.parse("2004-07-27"));
-	description = new SyndContentImpl();
-	description.setType("text/html");
-	description.setValue("<p>More Bug fixes, mor API changes, some new features and some Unit testing</p>"+
-	                     "<p>For details check the <a href=\"https://rometools.jira.com/wiki/display/ROME/Change+Log#ChangeLog-Changesmadefromv0.3tov0.4\">Changes Log</a></p>");
-	entry.setDescription(description);
-	entries.add(entry);
-	
-	feed.setEntries(entries);
-	
-	Writer writer = new StringWriter();
-	SyndFeedOutput output = new SyndFeedOutput();
-    output.output(feed,writer);
-    writer.close();
-    
-    return writer.toString();
-}
+		feed.setTitle("Sample AllegroRSS (created with ROME)");
+		// TODO:
+		feed.setLink("http://rome.dev.java.net");
+		feed.setDescription("Oferty sprzedaży spełniające Twoje kryteria wyszukiwania");
+
+		List<SyndEntry> entries = items.stream().map(i -> feedEntry(i)).collect(Collectors.toList());
+		feed.setEntries(entries);
+		return write(feed);
+	}
+
+	private SyndEntry feedEntry(ItemsListType item) {
+		SyndEntry entry = new SyndEntryImpl();
+		entry.setTitle(item.getItemTitle());
+		entry.setLink("http://allegro.pl/show_item.php?item=" + item.getItemId());
+		// entry.setPublishedDate(item.get);
+		entry.setDescription(createDescription(item));
+		return entry;
+	}
+
+	private SyndContent createDescription(ItemsListType item) {
+		SyndContent description = new SyndContentImpl();
+		description.setType("text/html");
+		StringBuilder sb = new StringBuilder();
+		sb.append(formatSellerInfo(item.getSellerInfo()));
+		sb.append(formatPriceInfo(item.getPriceInfo()));
+		sb.append(formatTime(item.getTimeToEnd(), item.getEndingTime()));
+		sb.append(formatPhotosInfo(item.getPhotosInfo()));
+		description.setValue(sb.toString());
+		return description;
+	}
+
+	private String formatPhotosInfo(ArrayOfPhotoinfotype photosInfo) {
+		// TODO: find 'main' photo
+		if (photosInfo.getItem().length > 0)
+			return format("<img src=\"%s\" width=\"128\" height=\"96\" alt=\"\" ><br />",
+					photosInfo.getItem(0).getPhotoUrl());
+		return "";
+	}
+
+	private Object formatTime(String timeToEnd, Calendar endingTime) {
+		if (endingTime != null)
+			return format("Do końca: %s (%s)<br />", timeToEnd, DATE_FORMAT.format(endingTime.getTime()));
+		else
+			return format("Do końca: %s<br />", timeToEnd);
+	}
+
+	private String formatSellerInfo(UserInfoType sellerInfo) {
+		return format("Sprzedający: <a href=\"http://allegro.pl/show_user.php?uid=%d\">%s</a> (%d)<br />",
+				sellerInfo.getUserId(), sellerInfo.getUserLogin(), sellerInfo.getUserRating());
+	}
+
+	private String formatPriceInfo(ArrayOfPriceinfotype priceInfo) {
+		return format("Cena: %.2f zł<br />", priceInfo.getItem(0).getPriceValue());
+	}
+
+	private String write(SyndFeed feed) throws IOException, FeedException {
+		Writer writer = new StringWriter();
+		SyndFeedOutput output = new SyndFeedOutput();
+		output.output(feed, writer);
+		writer.close();
+		return writer.toString();
+	}
 }
