@@ -85,7 +85,7 @@ public class AllegroClient {
 				.getSessionHandlePart();
 	}
 
-	public List<ItemsListType> search(Request req) throws RemoteException {
+	public SearchResult search(Request req) throws RemoteException {
 		String query = req.queryParams("q");
 		checkArgument(query != null);
 		FilterBuilder builder = FilterBuilder.search(query);
@@ -95,7 +95,10 @@ public class AllegroClient {
 		String condition = req.queryParams("c");
 		if (condition != null)
 			builder.condition(Condition.valueOf(condition.toUpperCase()));
-		return search(builder.build());
+		ArrayOfFilteroptionstype filter = builder.build();
+		List<ItemsListType> items = search(filter);
+		// FIXME: url() doesn't return the query
+		return new SearchResult(req.url(), builder.getDescription(), items);
 	}
 
 	private List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {

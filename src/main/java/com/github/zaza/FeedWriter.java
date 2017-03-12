@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import com.allegro.webapi.ArrayOfPhotoinfotype;
 import com.allegro.webapi.ArrayOfPriceinfotype;
 import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.UserInfoType;
+import com.github.zaza.allegro.SearchResult;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndContentImpl;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -28,16 +30,15 @@ public class FeedWriter {
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, d MMM yyyy HH:mm");
 
-	public String write(List<ItemsListType> items) throws IOException, FeedException {
+	public String write(SearchResult result) throws IOException, FeedException {
 		SyndFeed feed = new SyndFeedImpl();
 		feed.setFeedType("rss_2.0");
 
-		feed.setTitle("Sample AllegroRSS (created with ROME)");
-		// TODO:
-		feed.setLink("http://rome.dev.java.net");
+		feed.setTitle(format("Allegro.pl \"%s\"", result.getFilterDescription()));
+		feed.setLink(result.getQueryUrl());
 		feed.setDescription("Oferty sprzedaży spełniające Twoje kryteria wyszukiwania");
 
-		List<SyndEntry> entries = items.stream().map(i -> feedEntry(i)).collect(Collectors.toList());
+		List<SyndEntry> entries = result.getItems().stream().map(i -> feedEntry(i)).collect(Collectors.toList());
 		feed.setEntries(entries);
 		return write(feed);
 	}
@@ -46,7 +47,7 @@ public class FeedWriter {
 		SyndEntry entry = new SyndEntryImpl();
 		entry.setTitle(item.getItemTitle());
 		entry.setLink("http://allegro.pl/show_item.php?item=" + item.getItemId());
-		// entry.setPublishedDate(item.get);
+		entry.setPublishedDate(new Date());
 		entry.setDescription(createDescription(item));
 		return entry;
 	}

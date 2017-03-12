@@ -65,4 +65,9 @@ class FilterBuilder {
 		subFilter.setFilterValueRange(valueRange);
 		return subFilter;
 	}
+
+	String getDescription() {
+		// TODO: include more parameters in the description e.g. price
+		return query;
+	}
 }
