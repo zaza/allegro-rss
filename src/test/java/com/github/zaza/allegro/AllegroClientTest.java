@@ -15,10 +15,13 @@ public class AllegroClientTest {
 		assertEquals(AllegroClient.WEBAPI_VERSION_KEY, client().getVersionKey());
 	}
 
-	// TODO: check country code, assert 1 = Polska
+	@Test
+	public void countryCodeCheck() throws Exception {
+		assertEquals(AllegroClient.POLAND, client().getCountryCode("Polska"));
+	}
 
-	private AllegroClient client() throws ServiceException {
-		return new AllegroClient(System.getenv().get(Env.ALLEGRO_WEBAPI_KEY));
+	private TestableAllegroClient client() throws ServiceException {
+		return new TestableAllegroClient(System.getenv().get(Env.ALLEGRO_WEBAPI_KEY));
 	}
 
 }

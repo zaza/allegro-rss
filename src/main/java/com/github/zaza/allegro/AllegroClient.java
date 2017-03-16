@@ -17,7 +17,6 @@ import com.allegro.webapi.ArrayOfFilteroptionstype;
 import com.allegro.webapi.DoGetItemsListRequest;
 import com.allegro.webapi.DoGetItemsListResponse;
 import com.allegro.webapi.DoLoginEncRequest;
-import com.allegro.webapi.DoQuerySysStatusRequest;
 import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.ServicePort_PortType;
 import com.allegro.webapi.ServiceServiceLocator;
@@ -29,7 +28,7 @@ import spark.Request;
 
 public class AllegroClient {
 
-	private static final int POLAND = 1; // TODO: doGetCountries
+	protected static final int POLAND = 1;
 
 	static final int WEBAPI_VERSION_KEY = 1489663001;
 
@@ -37,8 +36,8 @@ public class AllegroClient {
 
 	private String login;
 	private String password;
-	private String webApiKey;
-	private ServicePort_PortType allegro;
+	protected String webApiKey;
+	protected ServicePort_PortType allegro;
 
 	private String sessionHandle;
 
@@ -54,13 +53,6 @@ public class AllegroClient {
 
 		ServiceServiceLocator service = new ServiceServiceLocator();
 		allegro = service.getservicePort();
-	}
-
-	long getVersionKey() throws RemoteException, ServiceException {
-		System.out.print("Receving key version... ");
-		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
-		System.out.println("done. Current version key=" + verKey);
-		return verKey;
 	}
 
 	void login() throws ServiceException, RemoteException {
