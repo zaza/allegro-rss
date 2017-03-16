@@ -13,7 +13,7 @@ class FilterBuilder {
 
 	private String query;
 	private Range<Integer> price;
-	private Condition condition;
+	private Boolean buyNew;
 
 	private FilterBuilder(String query) {
 		this.query = query;
@@ -28,8 +28,11 @@ class FilterBuilder {
 		return this;
 	}
 
-	FilterBuilder condition(Condition condition) {
-		this.condition = condition;
+	FilterBuilder condition(boolean buyNew) {
+		if (this.buyNew != null)
+			// when trying to set both buyNew and buyNew, unset the filter
+			this.buyNew = null;
+		this.buyNew = buyNew;
 		return this;
 	}
 
@@ -37,8 +40,8 @@ class FilterBuilder {
 		ArrayOfFilteroptionstype filter = new ArrayOfFilteroptionstype();
 		List<FilterOptionsType> subFilters = new ArrayList<>();
 		subFilters.add(newSubFilter(FilterId.Szukaj_w_tytule, query));
-		if (condition != null)
-			subFilters.add(newSubFilter(FilterId.Stan, condition.name().toLowerCase()));
+		if (buyNew != null)
+			subFilters.add(newSubFilter(FilterId.Stan, getCondition().name().toLowerCase()));
 		if (price != null)
 			subFilters.add(newSubFilter(FilterId.Cena, price));
 		filter.setItem(subFilters.toArray(new FilterOptionsType[subFilters.size()]));
@@ -66,6 +69,10 @@ class FilterBuilder {
 		return subFilter;
 	}
 
+	private Condition getCondition() {
+		return buyNew ? Condition.NEW : Condition.USED;
+	}
+	
 	String getDescription() {
 		// TODO: include more parameters in the description e.g. price
 		return query;

@@ -37,7 +37,7 @@ public class AllegroClient {
 		// client.search(FilterBuilder.search("mata
 		// 4cm").price(Range.lessThan(100)).condition(Condition.NEW).build());
 		List<ItemsListType> items = client
-				.search(FilterBuilder.search("nilfisk king").condition(Condition.USED).build());
+				.search(FilterBuilder.search("nilfisk king").condition(false).build());
 		for (ItemsListType item : items) {
 			System.out.println(item.getItemId() + ", " + item.getItemTitle() + " :: "
 					+ item.getPriceInfo().getItem(0).getPriceValue());
@@ -46,7 +46,7 @@ public class AllegroClient {
 
 	private static final int POLAND = 1; // TODO: doGetCountries
 
-	static final int WEBAPI_VERSION_KEY = 1488971865;
+	static final int WEBAPI_VERSION_KEY = 1489663001;
 
 	private static final int RESULT_SIZE = 1000; // maximum allowed
 
@@ -86,15 +86,16 @@ public class AllegroClient {
 	}
 
 	public SearchResult search(Request req) throws RemoteException {
-		String query = req.queryParams("q");
+		String query = req.queryParams("string");
 		checkArgument(query != null);
 		FilterBuilder builder = FilterBuilder.search(query);
-		String price = req.queryParams("p");
+		String price = req.queryParams("price_to");
 		if (price != null)
 			builder.price(Range.atMost(Integer.valueOf(price)));
-		String condition = req.queryParams("c");
-		if (condition != null)
-			builder.condition(Condition.valueOf(condition.toUpperCase()));
+		if (req.queryParams("buyUsed") !=null)
+			builder.condition(false);
+		if (req.queryParams("buyNew") != null)
+			builder.condition(true);
 		ArrayOfFilteroptionstype filter = builder.build();
 		List<ItemsListType> items = search(filter);
 		// FIXME: url() doesn't return the query
