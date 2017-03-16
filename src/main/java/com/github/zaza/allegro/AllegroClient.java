@@ -1,6 +1,5 @@
 package com.github.zaza.allegro;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 import java.rmi.RemoteException;
@@ -72,9 +71,7 @@ public class AllegroClient {
 	}
 
 	public SearchResult search(Request req) throws RemoteException {
-		String query = req.queryParams("string");
-		checkArgument(query != null);
-		FilterBuilder builder = FilterBuilder.search(query);
+		FilterBuilder builder = FilterBuilder.search(req.queryParams("string"));
 		String price = req.queryParams("price_to");
 		if (price != null)
 			builder.price(Range.atMost(Integer.valueOf(price)));
@@ -82,6 +79,8 @@ public class AllegroClient {
 			builder.condition(false);
 		if (req.queryParams("buyNew") != null)
 			builder.condition(true);
+		if (req.queryParams("category") != null)
+				builder.category(Integer.parseInt(req.queryParams("category")));
 		ArrayOfFilteroptionstype filter = builder.build();
 		List<ItemsListType> items = search(filter);
 		// FIXME: url() doesn't return the query
