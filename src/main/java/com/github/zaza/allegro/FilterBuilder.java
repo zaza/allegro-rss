@@ -14,6 +14,7 @@ class FilterBuilder {
 	private String query;
 	private Range<Integer> price;
 	private Boolean buyNew;
+	private int category;
 
 	private FilterBuilder(String query) {
 		this.query = query;
@@ -35,15 +36,23 @@ class FilterBuilder {
 		this.buyNew = buyNew;
 		return this;
 	}
+	
+	public FilterBuilder category(int category) {
+		this.category = category;
+		return this;
+	}
 
 	ArrayOfFilteroptionstype build() {
 		ArrayOfFilteroptionstype filter = new ArrayOfFilteroptionstype();
 		List<FilterOptionsType> subFilters = new ArrayList<>();
+		if (query != null && !query.isEmpty())
 		subFilters.add(newSubFilter(FilterId.Szukaj_w_tytule, query));
 		if (buyNew != null)
 			subFilters.add(newSubFilter(FilterId.Stan, getCondition().name().toLowerCase()));
 		if (price != null)
 			subFilters.add(newSubFilter(FilterId.Cena, price));
+		if (category != 0)
+			subFilters.add(newSubFilter(FilterId.Kategoria, Integer.toString(category)));
 		filter.setItem(subFilters.toArray(new FilterOptionsType[subFilters.size()]));
 		return filter;
 	}

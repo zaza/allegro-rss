@@ -30,20 +30,6 @@ import spark.Request;
 
 public class AllegroClient {
 
-	// TODO: remove when done smoke-testing
-	public static void main(String[] args) throws Exception {
-		AllegroClient client = new AllegroClient(args[0]);
-		client.login();
-		// client.search(FilterBuilder.search("mata
-		// 4cm").price(Range.lessThan(100)).condition(Condition.NEW).build());
-		List<ItemsListType> items = client
-				.search(FilterBuilder.search("nilfisk king").condition(false).build());
-		for (ItemsListType item : items) {
-			System.out.println(item.getItemId() + ", " + item.getItemTitle() + " :: "
-					+ item.getPriceInfo().getItem(0).getPriceValue());
-		}
-	}
-
 	private static final int POLAND = 1; // TODO: doGetCountries
 
 	static final int WEBAPI_VERSION_KEY = 1489663001;
@@ -78,7 +64,7 @@ public class AllegroClient {
 		return verKey;
 	}
 
-	private void login() throws ServiceException, RemoteException {
+	void login() throws ServiceException, RemoteException {
 		sessionHandle = allegro
 				.doLoginEnc(
 						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, WEBAPI_VERSION_KEY))
@@ -102,7 +88,7 @@ public class AllegroClient {
 		return new SearchResult(req.url(), builder.getDescription(), items);
 	}
 
-	private List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {
+	List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {
 		checkState(sessionHandle != null);
 		int offset = 0;
 		List<ItemsListType> result = new ArrayList<>();
