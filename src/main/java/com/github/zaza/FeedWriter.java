@@ -23,6 +23,8 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
+import com.rometools.rome.feed.synd.SyndImage;
+import com.rometools.rome.feed.synd.SyndImageImpl;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedOutput;
 
@@ -37,6 +39,12 @@ public class FeedWriter {
 		feed.setTitle(format("Allegro.pl \"%s\"", result.getFilterDescription()));
 		feed.setLink(result.getQueryUrl());
 		feed.setDescription("Oferty sprzedaży spełniające Twoje kryteria wyszukiwania");
+		
+		SyndImage image = new SyndImageImpl();
+		image.setTitle("Allegro.pl");
+		image.setUrl("https://allegro.pl/favicon.ico");
+		image.setLink("https://allegro.pl");
+		feed.setImage(image);
 
 		List<SyndEntry> entries = result.getItems().stream().map(i -> feedEntry(i)).collect(Collectors.toList());
 		feed.setEntries(entries);

@@ -84,6 +84,7 @@ class FilterBuilder {
 	
 	String getDescription() {
 		// TODO: include more parameters in the description e.g. price
+		// and keep in mind that 'query' can be null, e.g. when searching by category or user
 		return query;
 	}
 }
