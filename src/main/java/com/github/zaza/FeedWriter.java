@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import com.allegro.webapi.ArrayOfPhotoinfotype;
 import com.allegro.webapi.ArrayOfPriceinfotype;
 import com.allegro.webapi.ItemsListType;
+import com.allegro.webapi.PhotoInfoType;
 import com.allegro.webapi.UserInfoType;
 import com.github.zaza.allegro.SearchResult;
 import com.rometools.rome.feed.synd.SyndContent;
@@ -39,7 +40,7 @@ public class FeedWriter {
 		feed.setTitle(format("Allegro.pl \"%s\"", result.getFilterDescription()));
 		feed.setLink(result.getQueryUrl());
 		feed.setDescription("Oferty sprzedaży spełniające Twoje kryteria wyszukiwania");
-		
+
 		SyndImage image = new SyndImageImpl();
 		image.setTitle("Allegro.pl");
 		image.setUrl("https://allegro.pl/favicon.ico");
@@ -73,14 +74,22 @@ public class FeedWriter {
 	}
 
 	private String formatPhotosInfo(ArrayOfPhotoinfotype photosInfo) {
-		// TODO: find 'main' photo
-		if (photosInfo.getItem().length > 0)
-			return format("<img src=\"%s\" width=\"128\" height=\"96\" alt=\"\" ><br />",
-					photosInfo.getItem(0).getPhotoUrl());
+		if (photosInfo.getItem().length > 0) {
+			for (PhotoInfoType photo : photosInfo.getItem()) {
+				if (photo.isPhotoIsMain())
+					return asImg(photo);
+			}
+			// if no main photo found, use the first one
+			return asImg(photosInfo.getItem(0));
+		}
 		return "";
 	}
+	
+	private String asImg(PhotoInfoType photo) {
+		return format("<img src=\"%s\" width=\"128\" height=\"96\" alt=\"\" ><br />", photo.getPhotoUrl());
+	}
 
-	private Object formatTime(String timeToEnd, Calendar endingTime) {
+	private String formatTime(String timeToEnd, Calendar endingTime) {
 		if (endingTime != null)
 			return format("Do końca: %s (%s)<br />", timeToEnd, DATE_FORMAT.format(endingTime.getTime()));
 		else
