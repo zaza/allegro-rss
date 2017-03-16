@@ -75,16 +75,15 @@ public class AllegroClient {
 		String price = req.queryParams("price_to");
 		if (price != null)
 			builder.price(Range.atMost(Integer.valueOf(price)));
-		if (req.queryParams("buyUsed") !=null)
+		if (req.queryParams("buyUsed") != null)
 			builder.condition(false);
 		if (req.queryParams("buyNew") != null)
 			builder.condition(true);
 		if (req.queryParams("category") != null)
-				builder.category(Integer.parseInt(req.queryParams("category")));
+			builder.category(Integer.parseInt(req.queryParams("category")));
 		ArrayOfFilteroptionstype filter = builder.build();
 		List<ItemsListType> items = search(filter);
-		// FIXME: url() doesn't return the query
-		return new SearchResult(req.url(), builder.getDescription(), items);
+		return new SearchResult(req, builder.getDescription(), items);
 	}
 
 	List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {
