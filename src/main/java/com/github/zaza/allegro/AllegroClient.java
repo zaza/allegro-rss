@@ -30,7 +30,7 @@ public class AllegroClient {
 
 	protected static final int POLAND = 1;
 
-	static final int WEBAPI_VERSION_KEY = 1489663001;
+	static final int WEBAPI_VERSION_KEY = 1490270146;
 
 	private static final int RESULT_SIZE = 1000; // maximum allowed
 
