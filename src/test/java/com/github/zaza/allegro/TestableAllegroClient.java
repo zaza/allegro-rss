@@ -8,19 +8,11 @@ import javax.xml.rpc.ServiceException;
 
 import com.allegro.webapi.CountryInfoType;
 import com.allegro.webapi.DoGetCountriesRequest;
-import com.allegro.webapi.DoQuerySysStatusRequest;
 
 class TestableAllegroClient extends AllegroClient {
 
 	TestableAllegroClient(String webApiKey) throws ServiceException {
 		super(webApiKey);
-	}
-
-	long getVersionKey() throws RemoteException, ServiceException {
-		System.out.print("Receving key version... ");
-		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
-		System.out.println("done. Current version key=" + verKey);
-		return verKey;
 	}
 
 	long getCountryCode(String countryName) throws RemoteException, ServiceException {

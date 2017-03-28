@@ -11,8 +11,13 @@ import com.github.zaza.Env;
 public class AllegroClientTest {
 
 	@Test
+	public void latestVersionKeyCheck() throws Exception {
+		assertEquals(AllegroClient.WEBAPI_VERSION_KEY, client().getLatestVersionKey());
+	}
+
+	@Test
 	public void versionKeyCheck() throws Exception {
-		assertEquals(AllegroClient.WEBAPI_VERSION_KEY, client().getVersionKey());
+		assertEquals(client().getVersionKey(), client().getLatestVersionKey());
 	}
 
 	@Test

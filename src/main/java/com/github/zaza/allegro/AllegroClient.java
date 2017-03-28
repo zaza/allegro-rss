@@ -17,6 +17,7 @@ import com.allegro.webapi.ArrayOfFilteroptionstype;
 import com.allegro.webapi.DoGetItemsListRequest;
 import com.allegro.webapi.DoGetItemsListResponse;
 import com.allegro.webapi.DoLoginEncRequest;
+import com.allegro.webapi.DoQuerySysStatusRequest;
 import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.ServicePort_PortType;
 import com.allegro.webapi.ServiceServiceLocator;
@@ -30,7 +31,7 @@ public class AllegroClient {
 
 	protected static final int POLAND = 1;
 
-	static final int WEBAPI_VERSION_KEY = 1490270146;
+	static final int WEBAPI_VERSION_KEY = 1490695471;
 
 	private static final int RESULT_SIZE = 1000; // maximum allowed
 
@@ -55,10 +56,26 @@ public class AllegroClient {
 		allegro = service.getservicePort();
 	}
 
+	protected long getVersionKey() throws RemoteException, ServiceException {
+		long latestVersionKey = getLatestVersionKey();
+		if (WEBAPI_VERSION_KEY != latestVersionKey) {
+			System.out.println("The webapi version key is out-dated! Continuing with the latest version.");
+			return latestVersionKey;
+		}
+		return WEBAPI_VERSION_KEY;
+	}
+	
+	protected long getLatestVersionKey() throws RemoteException, ServiceException {
+		System.out.print("Receving key version... ");
+		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
+		System.out.println("done. Latest version key=" + verKey);
+		return verKey;
+	}
+	
 	void login() throws ServiceException, RemoteException {
 		sessionHandle = allegro
 				.doLoginEnc(
-						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, WEBAPI_VERSION_KEY))
+						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, getVersionKey()))
 				.getSessionHandlePart();
 	}
 
