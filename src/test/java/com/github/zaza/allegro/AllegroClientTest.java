@@ -5,13 +5,18 @@ import static org.junit.Assert.assertEquals;
 import javax.xml.rpc.ServiceException;
 
 import org.junit.Test;
+import org.junit.Ignore;
 
 import com.github.zaza.Env;
 
 public class AllegroClientTest {
 
 	@Test
+	@Ignore
 	public void latestVersionKeyCheck() throws Exception {
+		// The key changes frequently, resulting in the test to fail, see:
+		// http://allegro.pl/webapi/general.php#version_keys
+		// http://allegro.pl/webapi/faq.php#faq_3
 		assertEquals(AllegroClient.WEBAPI_VERSION_KEY, client().getLatestVersionKey());
 	}
 
