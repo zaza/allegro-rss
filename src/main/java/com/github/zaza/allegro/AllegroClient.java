@@ -14,10 +14,15 @@ import org.apache.axis.encoding.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.allegro.webapi.ArrayOfFilteroptionstype;
+import com.allegro.webapi.ArrayOfLong;
+import com.allegro.webapi.DoGetItemsInfoRequest;
+import com.allegro.webapi.DoGetItemsInfoResponse;
 import com.allegro.webapi.DoGetItemsListRequest;
 import com.allegro.webapi.DoGetItemsListResponse;
 import com.allegro.webapi.DoLoginEncRequest;
 import com.allegro.webapi.DoQuerySysStatusRequest;
+import com.allegro.webapi.ItemInfo;
+import com.allegro.webapi.ItemInfoStruct;
 import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.ServicePort_PortType;
 import com.allegro.webapi.ServiceServiceLocator;
@@ -33,7 +38,14 @@ public class AllegroClient {
 
 	static final int WEBAPI_VERSION_KEY = 1490695471;
 
-	private static final int RESULT_SIZE = 1000; // maximum allowed
+	/*
+	 * TODO maximum allowed results for doGetItemsList is 1000 but to simplify
+	 * the search align it with maximum id array size for doGetItemsInfo, which
+	 * is 25.
+	 * 
+	 * http://allegro.pl/webapi/documentation.php/show/id,52#method-input
+	 */
+	private static final int RESULT_SIZE = 25;
 
 	private String login;
 	private String password;
@@ -64,14 +76,14 @@ public class AllegroClient {
 		}
 		return WEBAPI_VERSION_KEY;
 	}
-	
+
 	protected long getLatestVersionKey() throws RemoteException, ServiceException {
 		System.out.print("Receving key version... ");
 		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
 		System.out.println("done. Latest version key=" + verKey);
 		return verKey;
 	}
-	
+
 	void login() throws ServiceException, RemoteException {
 		sessionHandle = allegro
 				.doLoginEnc(
@@ -91,36 +103,55 @@ public class AllegroClient {
 		if (req.queryParams("category") != null)
 			builder.category(Integer.parseInt(req.queryParams("category")));
 		ArrayOfFilteroptionstype filter = builder.build();
-		List<ItemsListType> items = search(filter);
+		List<Item> items = search(filter);
 		return new SearchResult(req, builder.getDescription(), items);
 	}
 
-	List<ItemsListType> search(ArrayOfFilteroptionstype filter) throws RemoteException {
+	List<Item> search(ArrayOfFilteroptionstype filter) throws RemoteException {
 		checkState(sessionHandle != null);
 		int offset = 0;
-		List<ItemsListType> result = new ArrayList<>();
+		List<Item> result = new ArrayList<>();
 		while (search(filter, result, offset, RESULT_SIZE)) {
 			offset += RESULT_SIZE;
 		}
 		return result;
 	}
 
-	private boolean search(ArrayOfFilteroptionstype filter, List<ItemsListType> result, int offset, int size)
+	private boolean search(ArrayOfFilteroptionstype filter, List<Item> result, int offset, int size)
 			throws RemoteException {
-		DoGetItemsListResponse itemsList = allegro.doGetItemsList(newRequest(filter, offset, size));
-		if (itemsList.getItemsList() != null)
-			result.addAll(Arrays.asList(itemsList.getItemsList().getItem()));
-		return itemsList.getItemsCount() > offset + size;
+		DoGetItemsListResponse itemsListResponse = allegro.doGetItemsList(newItemListRequest(filter, offset, size));
+		if (itemsListResponse.getItemsList() != null) {
+			List<ItemsListType> itemsList = Arrays.asList(itemsListResponse.getItemsList().getItem());
+			long[] ids = itemsList.stream().mapToLong(i -> i.getItemId()).toArray();
+			DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(newItemInfoRequest(ids));
+			List<ItemInfoStruct> itemInfos = Arrays.asList(itemsInfoResponse.getArrayItemListInfo().getItem());
+			checkState(itemsList.size() == itemInfos.size());
+			for (int i = 0; i < itemsList.size(); i++) {
+				ItemsListType itemsListType = itemsList.get(i);
+				ItemInfo itemInfo = itemInfos.get(i).getItemInfo();
+				checkState(itemsListType.getItemId() == itemInfo.getItId());
+				result.add(new Item(itemsListType, itemInfo));
+			}
+		}
+		return itemsListResponse.getItemsCount() > offset + size;
 	}
 
-	private DoGetItemsListRequest newRequest(ArrayOfFilteroptionstype filter, int offset, int size) {
+	private DoGetItemsListRequest newItemListRequest(ArrayOfFilteroptionstype filter, int offset, int size) {
 		DoGetItemsListRequest request = new DoGetItemsListRequest();
 		request.setCountryId(POLAND);
 		request.setWebapiKey(webApiKey);
 		request.setResultOffset(offset);
 		request.setResultSize(size);
-		request.setResultScope(ResultScope.zwracaj_wszystkie_dane);
+		request.setResultScope(
+				ResultScope.nie_zwracaj_struktury_z_filtrami | ResultScope.nie_zwracaj_struktury_z_kategoriami);
 		request.setFilterOptions(filter);
+		return request;
+	}
+
+	private DoGetItemsInfoRequest newItemInfoRequest(long[] ids) {
+		DoGetItemsInfoRequest request = new DoGetItemsInfoRequest();
+		request.setSessionHandle(sessionHandle);
+		request.setItemsIdArray(new ArrayOfLong(ids));
 		return request;
 	}
 

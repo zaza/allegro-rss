@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 import com.allegro.webapi.ArrayOfPhotoinfotype;
 import com.allegro.webapi.ArrayOfPriceinfotype;
-import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.PhotoInfoType;
 import com.allegro.webapi.UserInfoType;
+import com.github.zaza.allegro.Item;
 import com.github.zaza.allegro.SearchResult;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndContentImpl;
@@ -52,7 +52,7 @@ public class FeedWriter {
 		return write(feed);
 	}
 
-	private SyndEntry feedEntry(ItemsListType item) {
+	private SyndEntry feedEntry(Item item) {
 		SyndEntry entry = new SyndEntryImpl();
 		entry.setTitle(item.getItemTitle());
 		entry.setLink("http://allegro.pl/show_item.php?item=" + item.getItemId());
@@ -61,13 +61,14 @@ public class FeedWriter {
 		return entry;
 	}
 
-	private SyndContent createDescription(ItemsListType item) {
+	private SyndContent createDescription(Item item) {
 		SyndContent description = new SyndContentImpl();
 		description.setType("text/html");
 		StringBuilder sb = new StringBuilder();
 		sb.append(formatSellerInfo(item.getSellerInfo()));
 		sb.append(formatPriceInfo(item.getPriceInfo()));
 		sb.append(formatTime(item.getTimeToEnd(), item.getEndingTime()));
+		sb.append(formatLocation(item));
 		sb.append(formatPhotosInfo(item.getPhotosInfo()));
 		description.setValue(sb.toString());
 		return description;
@@ -103,6 +104,11 @@ public class FeedWriter {
 
 	private String formatPriceInfo(ArrayOfPriceinfotype priceInfo) {
 		return format("Cena: %.2f zł<br />", priceInfo.getItem(0).getPriceValue());
+	}
+	
+	private String formatLocation(Item item) {
+		// TODO include zip code (if included) and human-readable voivodeship, not the number code
+		return format("Lokalizacja: %s", item.getLocation());
 	}
 
 	private String write(SyndFeed feed) throws IOException, FeedException {
