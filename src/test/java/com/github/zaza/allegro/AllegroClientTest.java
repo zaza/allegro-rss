@@ -2,6 +2,8 @@ package com.github.zaza.allegro;
 
 import static org.junit.Assert.assertEquals;
 
+import java.rmi.RemoteException;
+
 import javax.xml.rpc.ServiceException;
 
 import org.junit.Test;
@@ -29,7 +31,21 @@ public class AllegroClientTest {
 	public void countryCodeCheck() throws Exception {
 		assertEquals(AllegroClient.POLAND, client().getCountryCode("Polska"));
 	}
+	
+	@Test
+	public void getCategoryIdForSportyWalki() throws Exception {
+		assertCategory(13522, "Sporty walki");
+	}
 
+	@Test
+	public void getCategoryIdForSportITurystyka() throws Exception {
+		assertCategory(3919, "Sport i Turystyka");
+	}
+
+	private void assertCategory(int id, String name) throws RemoteException, ServiceException {
+		assertEquals(id, client().getCategories(name));
+	}
+	
 	private TestableAllegroClient client() throws ServiceException {
 		return new TestableAllegroClient(System.getenv().get(Env.ALLEGRO_WEBAPI_KEY));
 	}
