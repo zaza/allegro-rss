@@ -107,8 +107,7 @@ public class FeedWriter {
 	}
 	
 	private String formatLocation(Item item) {
-		// TODO include zip code (if included) and human-readable voivodeship, not the number code
-		return format("Lokalizacja: %s", item.getLocation());
+		return format("Lokalizacja: %s (%s)<br />", item.getLocation(), item.getState());
 	}
 
 	private String write(SyndFeed feed) throws IOException, FeedException {

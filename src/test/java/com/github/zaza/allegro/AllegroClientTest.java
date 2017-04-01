@@ -43,7 +43,7 @@ public class AllegroClientTest {
 	}
 
 	private void assertCategory(int id, String name) throws RemoteException, ServiceException {
-		assertEquals(id, client().getCategories(name));
+		assertEquals(id, client().getCategoryId(name));
 	}
 	
 	private TestableAllegroClient client() throws ServiceException {

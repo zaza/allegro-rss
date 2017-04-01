@@ -51,10 +51,7 @@ public class Item {
 		return itemInfo.getItLocation();
 	}
 
-	public String getPostcode() {
-		return itemInfo.getItPostcode();
-	}
-	public int getState() {
-		return itemInfo.getItState();
+	public String getState() {
+		return State.valueOf(itemInfo.getItState()).name();
 	}
 }

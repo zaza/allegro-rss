@@ -10,6 +10,8 @@ import com.allegro.webapi.CatInfoType;
 import com.allegro.webapi.CountryInfoType;
 import com.allegro.webapi.DoGetCatsDataRequest;
 import com.allegro.webapi.DoGetCountriesRequest;
+import com.allegro.webapi.DoGetStatesInfoRequest;
+import com.allegro.webapi.StateInfoStruct;
 
 class TestableAllegroClient extends AllegroClient {
 
@@ -24,11 +26,18 @@ class TestableAllegroClient extends AllegroClient {
 				.mapToInt(c -> c.getCountryId()).findFirst().getAsInt();
 	}
 	
-	long getCategories(String categoryName) throws RemoteException, ServiceException {
+	long getCategoryId(String categoryName) throws RemoteException, ServiceException {
 		List<CatInfoType> categories = Arrays.asList(
 				allegro.doGetCatsData(new DoGetCatsDataRequest(POLAND, 0L, webApiKey)).getCatsList().getItem());
 		return categories.stream().filter(c -> categoryName.equalsIgnoreCase(c.getCatName()))
 				.mapToInt(c -> c.getCatId()).findFirst().getAsInt();
+	}
+	
+	String getState(int stateId) throws RemoteException, ServiceException {
+		List<StateInfoStruct> states = Arrays.asList(
+				allegro.doGetStatesInfo(new DoGetStatesInfoRequest(POLAND, webApiKey)).getStatesInfoArray().getItem());
+		return states.stream().filter(s -> s.getStateId() == stateId).map(s -> s.getStateName())
+				.findFirst().orElseThrow(IllegalArgumentException::new);
 	}
 
 }
