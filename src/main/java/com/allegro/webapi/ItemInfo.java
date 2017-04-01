@@ -48,6 +48,8 @@ public class ItemInfo  implements java.io.Serializable {
 
     private java.lang.String itDescription;
 
+    private java.lang.String itStandardizedDescription;
+
     private int itOptions;
 
     private int itState;
@@ -108,6 +110,7 @@ public class ItemInfo  implements java.io.Serializable {
            int itHighBidder,
            java.lang.String itHighBidderLogin,
            java.lang.String itDescription,
+           java.lang.String itStandardizedDescription,
            int itOptions,
            int itState,
            int itIsEco,
@@ -146,6 +149,7 @@ public class ItemInfo  implements java.io.Serializable {
            this.itHighBidder = itHighBidder;
            this.itHighBidderLogin = itHighBidderLogin;
            this.itDescription = itDescription;
+           this.itStandardizedDescription = itStandardizedDescription;
            this.itOptions = itOptions;
            this.itState = itState;
            this.itIsEco = itIsEco;
@@ -568,6 +572,26 @@ public class ItemInfo  implements java.io.Serializable {
 
 
     /**
+     * Gets the itStandardizedDescription value for this ItemInfo.
+     * 
+     * @return itStandardizedDescription
+     */
+    public java.lang.String getItStandardizedDescription() {
+        return itStandardizedDescription;
+    }
+
+
+    /**
+     * Sets the itStandardizedDescription value for this ItemInfo.
+     * 
+     * @param itStandardizedDescription
+     */
+    public void setItStandardizedDescription(java.lang.String itStandardizedDescription) {
+        this.itStandardizedDescription = itStandardizedDescription;
+    }
+
+
+    /**
      * Gets the itOptions value for this ItemInfo.
      * 
      * @return itOptions
@@ -968,6 +992,9 @@ public class ItemInfo  implements java.io.Serializable {
             ((this.itDescription==null && other.getItDescription()==null) || 
              (this.itDescription!=null &&
               this.itDescription.equals(other.getItDescription()))) &&
+            ((this.itStandardizedDescription==null && other.getItStandardizedDescription()==null) || 
+             (this.itStandardizedDescription!=null &&
+              this.itStandardizedDescription.equals(other.getItStandardizedDescription()))) &&
             this.itOptions == other.getItOptions() &&
             this.itState == other.getItState() &&
             this.itIsEco == other.getItIsEco() &&
@@ -1038,6 +1065,9 @@ public class ItemInfo  implements java.io.Serializable {
         }
         if (getItDescription() != null) {
             _hashCode += getItDescription().hashCode();
+        }
+        if (getItStandardizedDescription() != null) {
+            _hashCode += getItStandardizedDescription().hashCode();
         }
         _hashCode += getItOptions();
         _hashCode += getItState();
@@ -1197,6 +1227,13 @@ public class ItemInfo  implements java.io.Serializable {
         elemField.setFieldName("itDescription");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itDescription"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itStandardizedDescription");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itStandardizedDescription"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

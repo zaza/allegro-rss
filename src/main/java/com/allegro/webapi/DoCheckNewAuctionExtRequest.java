@@ -16,6 +16,8 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
 
     private com.allegro.webapi.ArrayOfTagnamestruct tags;
 
+    private com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions;
+
     public DoCheckNewAuctionExtRequest() {
     }
 
@@ -23,11 +25,13 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
            java.lang.String sessionHandle,
            com.allegro.webapi.ArrayOfFieldsvalue fields,
            com.allegro.webapi.ArrayOfVariantstruct variants,
-           com.allegro.webapi.ArrayOfTagnamestruct tags) {
+           com.allegro.webapi.ArrayOfTagnamestruct tags,
+           com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions) {
            this.sessionHandle = sessionHandle;
            this.fields = fields;
            this.variants = variants;
            this.tags = tags;
+           this.afterSalesServiceConditions = afterSalesServiceConditions;
     }
 
 
@@ -110,6 +114,26 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
         this.tags = tags;
     }
 
+
+    /**
+     * Gets the afterSalesServiceConditions value for this DoCheckNewAuctionExtRequest.
+     * 
+     * @return afterSalesServiceConditions
+     */
+    public com.allegro.webapi.AfterSalesServiceConditionsStruct getAfterSalesServiceConditions() {
+        return afterSalesServiceConditions;
+    }
+
+
+    /**
+     * Sets the afterSalesServiceConditions value for this DoCheckNewAuctionExtRequest.
+     * 
+     * @param afterSalesServiceConditions
+     */
+    public void setAfterSalesServiceConditions(com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions) {
+        this.afterSalesServiceConditions = afterSalesServiceConditions;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoCheckNewAuctionExtRequest)) return false;
@@ -133,7 +157,10 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
               this.variants.equals(other.getVariants()))) &&
             ((this.tags==null && other.getTags()==null) || 
              (this.tags!=null &&
-              this.tags.equals(other.getTags())));
+              this.tags.equals(other.getTags()))) &&
+            ((this.afterSalesServiceConditions==null && other.getAfterSalesServiceConditions()==null) || 
+             (this.afterSalesServiceConditions!=null &&
+              this.afterSalesServiceConditions.equals(other.getAfterSalesServiceConditions())));
         __equalsCalc = null;
         return _equals;
     }
@@ -156,6 +183,9 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
         }
         if (getTags() != null) {
             _hashCode += getTags().hashCode();
+        }
+        if (getAfterSalesServiceConditions() != null) {
+            _hashCode += getAfterSalesServiceConditions().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -191,6 +221,13 @@ public class DoCheckNewAuctionExtRequest  implements java.io.Serializable {
         elemField.setFieldName("tags");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "tags"));
         elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfTagnamestruct"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("afterSalesServiceConditions");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "afterSalesServiceConditions"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "AfterSalesServiceConditionsStruct"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

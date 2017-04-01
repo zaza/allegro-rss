@@ -24,6 +24,8 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
 
     private java.lang.Integer getProductInfo;
 
+    private java.lang.Integer getAfterSalesServiceConditions;
+
     public DoGetItemsInfoRequest() {
     }
 
@@ -35,7 +37,8 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
            java.lang.Integer getAttribs,
            java.lang.Integer getPostageOptions,
            java.lang.Integer getCompanyInfo,
-           java.lang.Integer getProductInfo) {
+           java.lang.Integer getProductInfo,
+           java.lang.Integer getAfterSalesServiceConditions) {
            this.sessionHandle = sessionHandle;
            this.itemsIdArray = itemsIdArray;
            this.getDesc = getDesc;
@@ -44,6 +47,7 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
            this.getPostageOptions = getPostageOptions;
            this.getCompanyInfo = getCompanyInfo;
            this.getProductInfo = getProductInfo;
+           this.getAfterSalesServiceConditions = getAfterSalesServiceConditions;
     }
 
 
@@ -206,6 +210,26 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
         this.getProductInfo = getProductInfo;
     }
 
+
+    /**
+     * Gets the getAfterSalesServiceConditions value for this DoGetItemsInfoRequest.
+     * 
+     * @return getAfterSalesServiceConditions
+     */
+    public java.lang.Integer getGetAfterSalesServiceConditions() {
+        return getAfterSalesServiceConditions;
+    }
+
+
+    /**
+     * Sets the getAfterSalesServiceConditions value for this DoGetItemsInfoRequest.
+     * 
+     * @param getAfterSalesServiceConditions
+     */
+    public void setGetAfterSalesServiceConditions(java.lang.Integer getAfterSalesServiceConditions) {
+        this.getAfterSalesServiceConditions = getAfterSalesServiceConditions;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoGetItemsInfoRequest)) return false;
@@ -241,7 +265,10 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
               this.getCompanyInfo.equals(other.getGetCompanyInfo()))) &&
             ((this.getProductInfo==null && other.getGetProductInfo()==null) || 
              (this.getProductInfo!=null &&
-              this.getProductInfo.equals(other.getGetProductInfo())));
+              this.getProductInfo.equals(other.getGetProductInfo()))) &&
+            ((this.getAfterSalesServiceConditions==null && other.getGetAfterSalesServiceConditions()==null) || 
+             (this.getAfterSalesServiceConditions!=null &&
+              this.getAfterSalesServiceConditions.equals(other.getGetAfterSalesServiceConditions())));
         __equalsCalc = null;
         return _equals;
     }
@@ -276,6 +303,9 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
         }
         if (getGetProductInfo() != null) {
             _hashCode += getGetProductInfo().hashCode();
+        }
+        if (getGetAfterSalesServiceConditions() != null) {
+            _hashCode += getGetAfterSalesServiceConditions().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -338,6 +368,13 @@ public class DoGetItemsInfoRequest  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("getProductInfo");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "getProductInfo"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("getAfterSalesServiceConditions");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "getAfterSalesServiceConditions"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

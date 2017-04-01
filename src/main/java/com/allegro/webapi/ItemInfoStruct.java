@@ -24,6 +24,8 @@ public class ItemInfoStruct  implements java.io.Serializable {
 
     private com.allegro.webapi.ProductStruct itemProductInfo;
 
+    private com.allegro.webapi.AfterSalesServiceConditionsStruct itemAfterSalesServiceConditions;
+
     public ItemInfoStruct() {
     }
 
@@ -35,7 +37,8 @@ public class ItemInfoStruct  implements java.io.Serializable {
            com.allegro.webapi.ArrayOfPostagestruct itemPostageOptions,
            com.allegro.webapi.ItemPaymentOptions itemPaymentOptions,
            com.allegro.webapi.CompanyInfoStruct itemCompanyInfo,
-           com.allegro.webapi.ProductStruct itemProductInfo) {
+           com.allegro.webapi.ProductStruct itemProductInfo,
+           com.allegro.webapi.AfterSalesServiceConditionsStruct itemAfterSalesServiceConditions) {
            this.itemInfo = itemInfo;
            this.itemCats = itemCats;
            this.itemImages = itemImages;
@@ -44,6 +47,7 @@ public class ItemInfoStruct  implements java.io.Serializable {
            this.itemPaymentOptions = itemPaymentOptions;
            this.itemCompanyInfo = itemCompanyInfo;
            this.itemProductInfo = itemProductInfo;
+           this.itemAfterSalesServiceConditions = itemAfterSalesServiceConditions;
     }
 
 
@@ -206,6 +210,26 @@ public class ItemInfoStruct  implements java.io.Serializable {
         this.itemProductInfo = itemProductInfo;
     }
 
+
+    /**
+     * Gets the itemAfterSalesServiceConditions value for this ItemInfoStruct.
+     * 
+     * @return itemAfterSalesServiceConditions
+     */
+    public com.allegro.webapi.AfterSalesServiceConditionsStruct getItemAfterSalesServiceConditions() {
+        return itemAfterSalesServiceConditions;
+    }
+
+
+    /**
+     * Sets the itemAfterSalesServiceConditions value for this ItemInfoStruct.
+     * 
+     * @param itemAfterSalesServiceConditions
+     */
+    public void setItemAfterSalesServiceConditions(com.allegro.webapi.AfterSalesServiceConditionsStruct itemAfterSalesServiceConditions) {
+        this.itemAfterSalesServiceConditions = itemAfterSalesServiceConditions;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof ItemInfoStruct)) return false;
@@ -241,7 +265,10 @@ public class ItemInfoStruct  implements java.io.Serializable {
               this.itemCompanyInfo.equals(other.getItemCompanyInfo()))) &&
             ((this.itemProductInfo==null && other.getItemProductInfo()==null) || 
              (this.itemProductInfo!=null &&
-              this.itemProductInfo.equals(other.getItemProductInfo())));
+              this.itemProductInfo.equals(other.getItemProductInfo()))) &&
+            ((this.itemAfterSalesServiceConditions==null && other.getItemAfterSalesServiceConditions()==null) || 
+             (this.itemAfterSalesServiceConditions!=null &&
+              this.itemAfterSalesServiceConditions.equals(other.getItemAfterSalesServiceConditions())));
         __equalsCalc = null;
         return _equals;
     }
@@ -276,6 +303,9 @@ public class ItemInfoStruct  implements java.io.Serializable {
         }
         if (getItemProductInfo() != null) {
             _hashCode += getItemProductInfo().hashCode();
+        }
+        if (getItemAfterSalesServiceConditions() != null) {
+            _hashCode += getItemAfterSalesServiceConditions().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -337,6 +367,13 @@ public class ItemInfoStruct  implements java.io.Serializable {
         elemField.setFieldName("itemProductInfo");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itemProductInfo"));
         elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ProductStruct"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itemAfterSalesServiceConditions");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itemAfterSalesServiceConditions"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "AfterSalesServiceConditionsStruct"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

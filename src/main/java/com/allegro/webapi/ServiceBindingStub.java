@@ -3231,6 +3231,13 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
+            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "AfterSalesServiceConditionsStruct");
+            cachedSerQNames.add(qName);
+            cls = com.allegro.webapi.AfterSalesServiceConditionsStruct.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "AlcoholDataStruct");
             cachedSerQNames.add(qName);
             cls = com.allegro.webapi.AlcoholDataStruct.class;
@@ -3602,13 +3609,6 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
-            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfPaymentdetailsstruct");
-            cachedSerQNames.add(qName);
-            cls = com.allegro.webapi.ArrayOfPaymentdetailsstruct.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
     }
     private void addBindings3() {
             java.lang.Class cls;
@@ -3624,6 +3624,13 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
+            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfPaymentdetailsstruct");
+            cachedSerQNames.add(qName);
+            cls = com.allegro.webapi.ArrayOfPaymentdetailsstruct.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfPaymentitemsstruct");
             cachedSerQNames.add(qName);
             cls = com.allegro.webapi.ArrayOfPaymentitemsstruct.class;
@@ -4317,13 +4324,6 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
-            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ItemGetImage");
-            cachedSerQNames.add(qName);
-            cls = com.allegro.webapi.ItemGetImage.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
     }
     private void addBindings4() {
             java.lang.Class cls;
@@ -4339,6 +4339,13 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
+            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ItemGetImage");
+            cachedSerQNames.add(qName);
+            cls = com.allegro.webapi.ItemGetImage.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ItemImageList");
             cachedSerQNames.add(qName);
             cls = com.allegro.webapi.ItemImageList.class;
@@ -5032,13 +5039,6 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
-            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "StateInfoStruct");
-            cachedSerQNames.add(qName);
-            cls = com.allegro.webapi.StateInfoStruct.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
     }
     private void addBindings5() {
             java.lang.Class cls;
@@ -5054,6 +5054,13 @@ public class ServiceBindingStub extends org.apache.axis.client.Stub implements c
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
+            qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "StateInfoStruct");
+            cachedSerQNames.add(qName);
+            cls = com.allegro.webapi.StateInfoStruct.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "StructSellAgain");
             cachedSerQNames.add(qName);
             cls = com.allegro.webapi.StructSellAgain.class;

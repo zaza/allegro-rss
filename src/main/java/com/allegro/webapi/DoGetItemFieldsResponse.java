@@ -10,12 +10,16 @@ package com.allegro.webapi;
 public class DoGetItemFieldsResponse  implements java.io.Serializable {
     private com.allegro.webapi.ArrayOfFieldsvalue itemFields;
 
+    private com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions;
+
     public DoGetItemFieldsResponse() {
     }
 
     public DoGetItemFieldsResponse(
-           com.allegro.webapi.ArrayOfFieldsvalue itemFields) {
+           com.allegro.webapi.ArrayOfFieldsvalue itemFields,
+           com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions) {
            this.itemFields = itemFields;
+           this.afterSalesServiceConditions = afterSalesServiceConditions;
     }
 
 
@@ -38,6 +42,26 @@ public class DoGetItemFieldsResponse  implements java.io.Serializable {
         this.itemFields = itemFields;
     }
 
+
+    /**
+     * Gets the afterSalesServiceConditions value for this DoGetItemFieldsResponse.
+     * 
+     * @return afterSalesServiceConditions
+     */
+    public com.allegro.webapi.AfterSalesServiceConditionsStruct getAfterSalesServiceConditions() {
+        return afterSalesServiceConditions;
+    }
+
+
+    /**
+     * Sets the afterSalesServiceConditions value for this DoGetItemFieldsResponse.
+     * 
+     * @param afterSalesServiceConditions
+     */
+    public void setAfterSalesServiceConditions(com.allegro.webapi.AfterSalesServiceConditionsStruct afterSalesServiceConditions) {
+        this.afterSalesServiceConditions = afterSalesServiceConditions;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoGetItemFieldsResponse)) return false;
@@ -52,7 +76,10 @@ public class DoGetItemFieldsResponse  implements java.io.Serializable {
         _equals = true && 
             ((this.itemFields==null && other.getItemFields()==null) || 
              (this.itemFields!=null &&
-              this.itemFields.equals(other.getItemFields())));
+              this.itemFields.equals(other.getItemFields()))) &&
+            ((this.afterSalesServiceConditions==null && other.getAfterSalesServiceConditions()==null) || 
+             (this.afterSalesServiceConditions!=null &&
+              this.afterSalesServiceConditions.equals(other.getAfterSalesServiceConditions())));
         __equalsCalc = null;
         return _equals;
     }
@@ -66,6 +93,9 @@ public class DoGetItemFieldsResponse  implements java.io.Serializable {
         int _hashCode = 1;
         if (getItemFields() != null) {
             _hashCode += getItemFields().hashCode();
+        }
+        if (getAfterSalesServiceConditions() != null) {
+            _hashCode += getAfterSalesServiceConditions().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -81,6 +111,13 @@ public class DoGetItemFieldsResponse  implements java.io.Serializable {
         elemField.setFieldName("itemFields");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itemFields"));
         elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfFieldsvalue"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("afterSalesServiceConditions");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "afterSalesServiceConditions"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "AfterSalesServiceConditionsStruct"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
