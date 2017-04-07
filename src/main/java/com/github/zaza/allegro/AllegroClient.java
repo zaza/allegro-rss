@@ -91,9 +91,14 @@ public class AllegroClient {
 
 	public SearchResult search(Request req) throws RemoteException {
 		FilterBuilder builder = FilterBuilder.search(req.queryParams("string"));
-		String price = req.queryParams("price_to");
-		if (price != null)
-			builder.price(Range.atMost(Integer.valueOf(price)));
+		String priceFrom = req.queryParams("price_from");
+		String priceTo = req.queryParams("price_to");
+		if (priceFrom == null && priceTo != null)
+			builder.price(Range.atMost(Integer.valueOf(priceTo)));
+		if (priceFrom != null && priceTo == null)
+			builder.price(Range.atLeast(Integer.valueOf(priceTo)));
+		if (priceFrom != null && priceTo != null)
+			builder.price(Range.closed(Integer.valueOf(priceFrom), Integer.valueOf(priceTo)));
 		if (req.queryParams("buyUsed") != null)
 			builder.condition(false);
 		if (req.queryParams("buyNew") != null)
