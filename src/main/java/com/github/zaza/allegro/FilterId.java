@@ -9,5 +9,5 @@ class FilterId {
 	static final String Szukaj_w_zakonczonych = "closed";
 	static final String Znajdz_podobne_oferty = "similar";
 	static final String Stan  = "condition"; // "new", "used"
-	static final String Rodzaj_ofery = "offerType"; // "buyNow", "auction"
+	static final String Rodzaj_oferty = "offerType"; // "buyNow", "auction"
 }

@@ -38,14 +38,12 @@ public class AllegroClient {
 
 	static final int WEBAPI_VERSION_KEY = 1490695471;
 
+	private static final int ITEMS_LIST_MAX_RESULT_SIZE = 1000;
+
 	/*
-	 * TODO maximum allowed results for doGetItemsList is 1000 but to simplify
-	 * the search align it with maximum id array size for doGetItemsInfo, which
-	 * is 25.
-	 * 
 	 * http://allegro.pl/webapi/documentation.php/show/id,52#method-input
 	 */
-	private static final int RESULT_SIZE = 25;
+	private static final int ITEMS_INFO_MAX_RESULT_SIZE = 25;
 
 	private String login;
 	private String password;
@@ -111,8 +109,8 @@ public class AllegroClient {
 		checkState(sessionHandle != null);
 		int offset = 0;
 		List<Item> result = new ArrayList<>();
-		while (search(filter, result, offset, RESULT_SIZE)) {
-			offset += RESULT_SIZE;
+		while (search(filter, result, offset, ITEMS_LIST_MAX_RESULT_SIZE)) {
+			offset += ITEMS_LIST_MAX_RESULT_SIZE;
 		}
 		return result;
 	}
@@ -122,18 +120,25 @@ public class AllegroClient {
 		DoGetItemsListResponse itemsListResponse = allegro.doGetItemsList(newItemListRequest(filter, offset, size));
 		if (itemsListResponse.getItemsList() != null) {
 			List<ItemsListType> itemsList = Arrays.asList(itemsListResponse.getItemsList().getItem());
-			long[] ids = itemsList.stream().mapToLong(i -> i.getItemId()).toArray();
-			DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(newItemInfoRequest(ids));
+			collectItemInfos(result, itemsList);
+		}
+		return itemsListResponse.getItemsCount() > offset + size;
+	}
+
+	private void collectItemInfos(List<Item> result, List<ItemsListType> itemsList) throws RemoteException {
+		long[] ids = itemsList.stream().mapToLong(i -> i.getItemId()).toArray();
+		int offset = 0;
+		while (offset < ids.length) {
+			DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(newItemInfoRequest(ids, offset, ITEMS_INFO_MAX_RESULT_SIZE));
 			List<ItemInfoStruct> itemInfos = Arrays.asList(itemsInfoResponse.getArrayItemListInfo().getItem());
-			checkState(itemsList.size() == itemInfos.size());
-			for (int i = 0; i < itemsList.size(); i++) {
-				ItemsListType itemsListType = itemsList.get(i);
+			for (int i = 0; i < itemInfos.size(); i++) {
+				ItemsListType itemsListType = itemsList.get(offset + i);
 				ItemInfo itemInfo = itemInfos.get(i).getItemInfo();
 				checkState(itemsListType.getItemId() == itemInfo.getItId());
 				result.add(new Item(itemsListType, itemInfo));
 			}
+			offset += ITEMS_INFO_MAX_RESULT_SIZE;
 		}
-		return itemsListResponse.getItemsCount() > offset + size;
 	}
 
 	private DoGetItemsListRequest newItemListRequest(ArrayOfFilteroptionstype filter, int offset, int size) {
@@ -148,10 +153,11 @@ public class AllegroClient {
 		return request;
 	}
 
-	private DoGetItemsInfoRequest newItemInfoRequest(long[] ids) {
+	private DoGetItemsInfoRequest newItemInfoRequest(long[] ids, int offset, int size) {
+		long[] idsRange = Arrays.copyOfRange(ids, offset, Math.min(offset + size, ids.length));
 		DoGetItemsInfoRequest request = new DoGetItemsInfoRequest();
 		request.setSessionHandle(sessionHandle);
-		request.setItemsIdArray(new ArrayOfLong(ids));
+		request.setItemsIdArray(new ArrayOfLong(idsRange));
 		return request;
 	}
 
