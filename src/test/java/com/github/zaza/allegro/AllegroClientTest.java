@@ -1,13 +1,15 @@
 package com.github.zaza.allegro;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import com.github.zaza.Env;
 
@@ -40,6 +42,14 @@ public class AllegroClientTest {
 	@Test
 	public void getCategoryIdForSportITurystyka() throws Exception {
 		assertCategory(3919, "Sport i Turystyka");
+	}
+	
+	@Test(timeout = 10000)
+	public void searchWithLocationIsFastForLargeResultSets() throws Exception {
+		List<Item> items = client().search(FilterBuilder.search("cmax błotnik prawy przod").build());
+		
+		assertTrue(items.size() > 100);
+		assertTrue(items.stream().anyMatch(i -> !i.getLocation().isEmpty()));
 	}
 
 	private void assertCategory(int id, String name) throws RemoteException, ServiceException {

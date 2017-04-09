@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
+import com.allegro.webapi.ArrayOfFilteroptionstype;
 import com.allegro.webapi.CatInfoType;
 import com.allegro.webapi.CountryInfoType;
 import com.allegro.webapi.DoGetCatsDataRequest;
@@ -38,6 +39,11 @@ class TestableAllegroClient extends AllegroClient {
 				allegro.doGetStatesInfo(new DoGetStatesInfoRequest(POLAND, webApiKey)).getStatesInfoArray().getItem());
 		return states.stream().filter(s -> s.getStateId() == stateId).map(s -> s.getStateName())
 				.findFirst().orElseThrow(IllegalArgumentException::new);
+	}
+	
+	List<Item> search(ArrayOfFilteroptionstype filter) throws RemoteException {
+		login();
+		return super.search(filter);
 	}
 
 }

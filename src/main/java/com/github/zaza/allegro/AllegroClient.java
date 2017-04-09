@@ -6,7 +6,11 @@ import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.xml.rpc.ServiceException;
 
@@ -21,7 +25,6 @@ import com.allegro.webapi.DoGetItemsListRequest;
 import com.allegro.webapi.DoGetItemsListResponse;
 import com.allegro.webapi.DoLoginEncRequest;
 import com.allegro.webapi.DoQuerySysStatusRequest;
-import com.allegro.webapi.ItemInfo;
 import com.allegro.webapi.ItemInfoStruct;
 import com.allegro.webapi.ItemsListType;
 import com.allegro.webapi.ServicePort_PortType;
@@ -66,7 +69,7 @@ public class AllegroClient {
 		allegro = service.getservicePort();
 	}
 
-	protected long getVersionKey() throws RemoteException, ServiceException {
+	protected long getVersionKey() throws RemoteException {
 		long latestVersionKey = getLatestVersionKey();
 		if (WEBAPI_VERSION_KEY != latestVersionKey) {
 			System.out.println("The webapi version key is out-dated! Continuing with the latest version.");
@@ -75,14 +78,14 @@ public class AllegroClient {
 		return WEBAPI_VERSION_KEY;
 	}
 
-	protected long getLatestVersionKey() throws RemoteException, ServiceException {
+	protected long getLatestVersionKey() throws RemoteException {
 		System.out.print("Receving key version... ");
 		long verKey = allegro.doQuerySysStatus(new DoQuerySysStatusRequest(1, POLAND, webApiKey)).getVerKey();
 		System.out.println("done. Latest version key=" + verKey);
 		return verKey;
 	}
 
-	void login() throws ServiceException, RemoteException {
+	void login() throws RemoteException {
 		sessionHandle = allegro
 				.doLoginEnc(
 						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, getVersionKey()))
@@ -133,16 +136,40 @@ public class AllegroClient {
 	private void collectItemInfos(List<Item> result, List<ItemsListType> itemsList) throws RemoteException {
 		long[] ids = itemsList.stream().mapToLong(i -> i.getItemId()).toArray();
 		int offset = 0;
+		List<DoGetItemsInfoRequest> requests = new ArrayList<>();
 		while (offset < ids.length) {
-			DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(newItemInfoRequest(ids, offset, ITEMS_INFO_MAX_RESULT_SIZE));
-			List<ItemInfoStruct> itemInfos = Arrays.asList(itemsInfoResponse.getArrayItemListInfo().getItem());
-			for (int i = 0; i < itemInfos.size(); i++) {
-				ItemsListType itemsListType = itemsList.get(offset + i);
-				ItemInfo itemInfo = itemInfos.get(i).getItemInfo();
-				checkState(itemsListType.getItemId() == itemInfo.getItId());
-				result.add(new Item(itemsListType, itemInfo));
-			}
+			requests.add(newItemInfoRequest(ids, offset, ITEMS_INFO_MAX_RESULT_SIZE));
 			offset += ITEMS_INFO_MAX_RESULT_SIZE;
+		}
+		ExecutorService executorService = Executors.newFixedThreadPool(4);
+		Collection<Callable<List<ItemInfoStruct>>> tasks = new ArrayList<>();
+		for (DoGetItemsInfoRequest r : requests) {
+			Callable<List<ItemInfoStruct>> task = () -> {
+		    	DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(r);
+				return Arrays.asList(itemsInfoResponse.getArrayItemListInfo().getItem());
+			};
+			tasks.add(task);
+		}
+		
+		List<ItemInfoStruct> itemInfos = new ArrayList<>();
+		try {
+			executorService.invokeAll(tasks).stream()
+				    .map(f -> {
+				        try {
+				            return f.get();
+				        }
+				        catch (Exception e) {
+				            throw new IllegalStateException(e);
+				        }
+				    })
+				    .forEach(items -> itemInfos.addAll(items));
+		} catch (InterruptedException e) {
+			throw new IllegalStateException("Collection item infos has been interrupted!", e);
+		}
+		
+		for (ItemsListType itemsListType : itemsList) {
+			ItemInfoStruct itemInfo = itemInfos.stream().filter(info -> info.getItemInfo().getItId() == itemsListType.getItemId()).findFirst().get();
+			result.add(new Item(itemsListType, itemInfo.getItemInfo()));
 		}
 	}
 
