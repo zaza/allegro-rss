@@ -55,11 +55,6 @@ public class AllegroClient {
 
 	private String sessionHandle;
 
-	public AllegroClient(Request req) throws ServiceException, RemoteException {
-		this(req.queryParams("wak"));
-		login();
-	}
-
 	AllegroClient(String webApiKey) throws ServiceException {
 		this.login = System.getenv().get(Env.ALLEGRO_LOGIN);
 		this.password = System.getenv().get(Env.ALLEGRO_PASSWORD);

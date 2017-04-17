@@ -11,8 +11,6 @@ import javax.xml.rpc.ServiceException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.github.zaza.Env;
-
 public class AllegroClientTest {
 
 	@Test
@@ -59,7 +57,7 @@ public class AllegroClientTest {
 	}
 	
 	private TestableAllegroClient client() throws ServiceException {
-		return new TestableAllegroClient(System.getenv().get(Env.ALLEGRO_WEBAPI_KEY));
+		return TestableAllegroClient.get();
 	}
 
 }
