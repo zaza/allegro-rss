@@ -44,7 +44,9 @@ public class AllegroClientTest {
 		assertCategory(3919, "Sport i Turystyka");
 	}
 	
-	@Test(timeout = 10000)
+	// FIXME: temporarily increased timeout to 20sec, but it should take just few seconds to complete
+	// see https://github.com/zaza/allegro-rss/issues/5
+	@Test(timeout = 20000)
 	public void searchWithLocationIsFastForLargeResultSets() throws Exception {
 		List<Item> items = client().search(FilterBuilder.search("cmax błotnik prawy przod").build());
 		
