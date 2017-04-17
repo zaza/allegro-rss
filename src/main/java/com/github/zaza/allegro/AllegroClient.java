@@ -171,6 +171,7 @@ public class AllegroClient {
 			ItemInfoStruct itemInfo = itemInfos.stream().filter(info -> info.getItemInfo().getItId() == itemsListType.getItemId()).findFirst().get();
 			result.add(new Item(itemsListType, itemInfo.getItemInfo()));
 		}
+		executorService.shutdown();
 	}
 
 	private DoGetItemsListRequest newItemListRequest(ArrayOfFilteroptionstype filter, int offset, int size) {
