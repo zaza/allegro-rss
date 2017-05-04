@@ -55,13 +55,14 @@ public class AllegroClient {
 
 	private String sessionHandle;
 
-	AllegroClient(String webApiKey) throws ServiceException {
+	public AllegroClient(String webApiKey) throws ServiceException, RemoteException {
 		this.login = System.getenv().get(Env.ALLEGRO_LOGIN);
 		this.password = System.getenv().get(Env.ALLEGRO_PASSWORD);
 		this.webApiKey = webApiKey;
 
 		ServiceServiceLocator service = new ServiceServiceLocator();
 		allegro = service.getservicePort();
+		login();
 	}
 
 	protected long getVersionKey() throws RemoteException {
@@ -80,7 +81,7 @@ public class AllegroClient {
 		return verKey;
 	}
 
-	void login() throws RemoteException {
+	private void login() throws RemoteException {
 		sessionHandle = allegro
 				.doLoginEnc(
 						new DoLoginEncRequest(login, encryptAndEncodePassword(), POLAND, webApiKey, getVersionKey()))

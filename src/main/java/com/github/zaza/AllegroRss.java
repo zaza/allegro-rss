@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.xml.rpc.ServiceException;
 
-import com.github.zaza.allegro.AllegroClientProvider;
+import com.github.zaza.allegro.AllegroClient;
 import com.github.zaza.allegro.SearchResult;
 import com.rometools.rome.io.FeedException;
 
@@ -20,9 +20,9 @@ public class AllegroRss {
 		get("/rss", (req, res) -> writeFeed(searchItems(req)));
 	}
 
-	private static SearchResult searchItems(Request request) throws IOException, FeedException {
+	private static SearchResult searchItems(Request request) throws IOException, FeedException, ServiceException {
 		String webApiKey = request.queryParams("wak");
-		return AllegroClientProvider.getInstance().getClient(webApiKey).search(request);
+		return new AllegroClient(webApiKey).search(request);
 	}
 
 	private static String writeFeed(SearchResult result) throws IOException, FeedException {
