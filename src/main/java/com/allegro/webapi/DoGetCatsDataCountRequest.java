@@ -14,16 +14,20 @@ public class DoGetCatsDataCountRequest  implements java.io.Serializable {
 
     private java.lang.String webapiKey;
 
+    private java.lang.Boolean onlyLeaf;
+
     public DoGetCatsDataCountRequest() {
     }
 
     public DoGetCatsDataCountRequest(
            int countryId,
            java.lang.Long localVersion,
-           java.lang.String webapiKey) {
+           java.lang.String webapiKey,
+           java.lang.Boolean onlyLeaf) {
            this.countryId = countryId;
            this.localVersion = localVersion;
            this.webapiKey = webapiKey;
+           this.onlyLeaf = onlyLeaf;
     }
 
 
@@ -86,6 +90,26 @@ public class DoGetCatsDataCountRequest  implements java.io.Serializable {
         this.webapiKey = webapiKey;
     }
 
+
+    /**
+     * Gets the onlyLeaf value for this DoGetCatsDataCountRequest.
+     * 
+     * @return onlyLeaf
+     */
+    public java.lang.Boolean getOnlyLeaf() {
+        return onlyLeaf;
+    }
+
+
+    /**
+     * Sets the onlyLeaf value for this DoGetCatsDataCountRequest.
+     * 
+     * @param onlyLeaf
+     */
+    public void setOnlyLeaf(java.lang.Boolean onlyLeaf) {
+        this.onlyLeaf = onlyLeaf;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoGetCatsDataCountRequest)) return false;
@@ -104,7 +128,10 @@ public class DoGetCatsDataCountRequest  implements java.io.Serializable {
               this.localVersion.equals(other.getLocalVersion()))) &&
             ((this.webapiKey==null && other.getWebapiKey()==null) || 
              (this.webapiKey!=null &&
-              this.webapiKey.equals(other.getWebapiKey())));
+              this.webapiKey.equals(other.getWebapiKey()))) &&
+            ((this.onlyLeaf==null && other.getOnlyLeaf()==null) || 
+             (this.onlyLeaf!=null &&
+              this.onlyLeaf.equals(other.getOnlyLeaf())));
         __equalsCalc = null;
         return _equals;
     }
@@ -122,6 +149,9 @@ public class DoGetCatsDataCountRequest  implements java.io.Serializable {
         }
         if (getWebapiKey() != null) {
             _hashCode += getWebapiKey().hashCode();
+        }
+        if (getOnlyLeaf() != null) {
+            _hashCode += getOnlyLeaf().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -150,6 +180,13 @@ public class DoGetCatsDataCountRequest  implements java.io.Serializable {
         elemField.setFieldName("webapiKey");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "webapiKey"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("onlyLeaf");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "onlyLeaf"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

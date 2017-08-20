@@ -56,6 +56,8 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
 
     private java.lang.String postBuyFormBuyerEmail;
 
+    private float postBuyFormAdditionalServicesAmount;
+
     public PostBuyFormDataStruct() {
     }
 
@@ -83,7 +85,8 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
            float postBuyFormPaymentAmount,
            int postBuyFormSentBySeller,
            java.lang.String postBuyFormBuyerLogin,
-           java.lang.String postBuyFormBuyerEmail) {
+           java.lang.String postBuyFormBuyerEmail,
+           float postBuyFormAdditionalServicesAmount) {
            this.postBuyFormId = postBuyFormId;
            this.postBuyFormItems = postBuyFormItems;
            this.postBuyFormBuyerId = postBuyFormBuyerId;
@@ -108,6 +111,7 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
            this.postBuyFormSentBySeller = postBuyFormSentBySeller;
            this.postBuyFormBuyerLogin = postBuyFormBuyerLogin;
            this.postBuyFormBuyerEmail = postBuyFormBuyerEmail;
+           this.postBuyFormAdditionalServicesAmount = postBuyFormAdditionalServicesAmount;
     }
 
 
@@ -590,6 +594,26 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
         this.postBuyFormBuyerEmail = postBuyFormBuyerEmail;
     }
 
+
+    /**
+     * Gets the postBuyFormAdditionalServicesAmount value for this PostBuyFormDataStruct.
+     * 
+     * @return postBuyFormAdditionalServicesAmount
+     */
+    public float getPostBuyFormAdditionalServicesAmount() {
+        return postBuyFormAdditionalServicesAmount;
+    }
+
+
+    /**
+     * Sets the postBuyFormAdditionalServicesAmount value for this PostBuyFormDataStruct.
+     * 
+     * @param postBuyFormAdditionalServicesAmount
+     */
+    public void setPostBuyFormAdditionalServicesAmount(float postBuyFormAdditionalServicesAmount) {
+        this.postBuyFormAdditionalServicesAmount = postBuyFormAdditionalServicesAmount;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof PostBuyFormDataStruct)) return false;
@@ -655,7 +679,8 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
               this.postBuyFormBuyerLogin.equals(other.getPostBuyFormBuyerLogin()))) &&
             ((this.postBuyFormBuyerEmail==null && other.getPostBuyFormBuyerEmail()==null) || 
              (this.postBuyFormBuyerEmail!=null &&
-              this.postBuyFormBuyerEmail.equals(other.getPostBuyFormBuyerEmail())));
+              this.postBuyFormBuyerEmail.equals(other.getPostBuyFormBuyerEmail()))) &&
+            this.postBuyFormAdditionalServicesAmount == other.getPostBuyFormAdditionalServicesAmount();
         __equalsCalc = null;
         return _equals;
     }
@@ -721,6 +746,7 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
         if (getPostBuyFormBuyerEmail() != null) {
             _hashCode += getPostBuyFormBuyerEmail().hashCode();
         }
+        _hashCode += new Float(getPostBuyFormAdditionalServicesAmount()).hashCode();
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -876,6 +902,12 @@ public class PostBuyFormDataStruct  implements java.io.Serializable {
         elemField.setFieldName("postBuyFormBuyerEmail");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "postBuyFormBuyerEmail"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("postBuyFormAdditionalServicesAmount");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "postBuyFormAdditionalServicesAmount"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "float"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

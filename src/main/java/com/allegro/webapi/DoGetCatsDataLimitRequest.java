@@ -18,6 +18,8 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
 
     private java.lang.Integer packageElement;
 
+    private java.lang.Boolean onlyLeaf;
+
     public DoGetCatsDataLimitRequest() {
     }
 
@@ -26,12 +28,14 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
            java.lang.Long localVersion,
            java.lang.String webapiKey,
            java.lang.Integer offset,
-           java.lang.Integer packageElement) {
+           java.lang.Integer packageElement,
+           java.lang.Boolean onlyLeaf) {
            this.countryId = countryId;
            this.localVersion = localVersion;
            this.webapiKey = webapiKey;
            this.offset = offset;
            this.packageElement = packageElement;
+           this.onlyLeaf = onlyLeaf;
     }
 
 
@@ -134,6 +138,26 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
         this.packageElement = packageElement;
     }
 
+
+    /**
+     * Gets the onlyLeaf value for this DoGetCatsDataLimitRequest.
+     * 
+     * @return onlyLeaf
+     */
+    public java.lang.Boolean getOnlyLeaf() {
+        return onlyLeaf;
+    }
+
+
+    /**
+     * Sets the onlyLeaf value for this DoGetCatsDataLimitRequest.
+     * 
+     * @param onlyLeaf
+     */
+    public void setOnlyLeaf(java.lang.Boolean onlyLeaf) {
+        this.onlyLeaf = onlyLeaf;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoGetCatsDataLimitRequest)) return false;
@@ -158,7 +182,10 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
               this.offset.equals(other.getOffset()))) &&
             ((this.packageElement==null && other.getPackageElement()==null) || 
              (this.packageElement!=null &&
-              this.packageElement.equals(other.getPackageElement())));
+              this.packageElement.equals(other.getPackageElement()))) &&
+            ((this.onlyLeaf==null && other.getOnlyLeaf()==null) || 
+             (this.onlyLeaf!=null &&
+              this.onlyLeaf.equals(other.getOnlyLeaf())));
         __equalsCalc = null;
         return _equals;
     }
@@ -182,6 +209,9 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
         }
         if (getPackageElement() != null) {
             _hashCode += getPackageElement().hashCode();
+        }
+        if (getOnlyLeaf() != null) {
+            _hashCode += getOnlyLeaf().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -223,6 +253,13 @@ public class DoGetCatsDataLimitRequest  implements java.io.Serializable {
         elemField.setFieldName("packageElement");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "packageElement"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("onlyLeaf");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "onlyLeaf"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

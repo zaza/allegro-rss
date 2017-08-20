@@ -141,6 +141,9 @@ public class AllegroClient {
 		Collection<Callable<List<ItemInfoStruct>>> tasks = new ArrayList<>();
 		for (DoGetItemsInfoRequest r : requests) {
 			Callable<List<ItemInfoStruct>> task = () -> {
+				// can fail with NPE
+				// https://travis-ci.org/zaza/allegro-rss/builds/259161485
+				// ignore the ItemsInfo ...
 		    	DoGetItemsInfoResponse itemsInfoResponse = allegro.doGetItemsInfo(r);
 				return Arrays.asList(itemsInfoResponse.getArrayItemListInfo().getItem());
 			};
@@ -164,6 +167,7 @@ public class AllegroClient {
 		}
 		
 		for (ItemsListType itemsListType : itemsList) {
+			// ... and skip it here
 			ItemInfoStruct itemInfo = itemInfos.stream().filter(info -> info.getItemInfo().getItId() == itemsListType.getItemId()).findFirst().get();
 			result.add(new Item(itemsListType, itemInfo.getItemInfo()));
 		}

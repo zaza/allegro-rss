@@ -20,6 +20,8 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
 
     private com.allegro.webapi.PostBuyFormItemDealsVariantStruct dealVariant;
 
+    private com.allegro.webapi.ArrayOfPostbuyformitemdealsadditionalservicestruct dealAdditionalServices;
+
     public PostBuyFormItemDealsStruct() {
     }
 
@@ -29,13 +31,15 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
            int dealQuantity,
            java.util.Calendar dealDate,
            boolean dealWasDiscounted,
-           com.allegro.webapi.PostBuyFormItemDealsVariantStruct dealVariant) {
+           com.allegro.webapi.PostBuyFormItemDealsVariantStruct dealVariant,
+           com.allegro.webapi.ArrayOfPostbuyformitemdealsadditionalservicestruct dealAdditionalServices) {
            this.dealId = dealId;
            this.dealFinalPrice = dealFinalPrice;
            this.dealQuantity = dealQuantity;
            this.dealDate = dealDate;
            this.dealWasDiscounted = dealWasDiscounted;
            this.dealVariant = dealVariant;
+           this.dealAdditionalServices = dealAdditionalServices;
     }
 
 
@@ -158,6 +162,26 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
         this.dealVariant = dealVariant;
     }
 
+
+    /**
+     * Gets the dealAdditionalServices value for this PostBuyFormItemDealsStruct.
+     * 
+     * @return dealAdditionalServices
+     */
+    public com.allegro.webapi.ArrayOfPostbuyformitemdealsadditionalservicestruct getDealAdditionalServices() {
+        return dealAdditionalServices;
+    }
+
+
+    /**
+     * Sets the dealAdditionalServices value for this PostBuyFormItemDealsStruct.
+     * 
+     * @param dealAdditionalServices
+     */
+    public void setDealAdditionalServices(com.allegro.webapi.ArrayOfPostbuyformitemdealsadditionalservicestruct dealAdditionalServices) {
+        this.dealAdditionalServices = dealAdditionalServices;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof PostBuyFormItemDealsStruct)) return false;
@@ -179,7 +203,10 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
             this.dealWasDiscounted == other.isDealWasDiscounted() &&
             ((this.dealVariant==null && other.getDealVariant()==null) || 
              (this.dealVariant!=null &&
-              this.dealVariant.equals(other.getDealVariant())));
+              this.dealVariant.equals(other.getDealVariant()))) &&
+            ((this.dealAdditionalServices==null && other.getDealAdditionalServices()==null) || 
+             (this.dealAdditionalServices!=null &&
+              this.dealAdditionalServices.equals(other.getDealAdditionalServices())));
         __equalsCalc = null;
         return _equals;
     }
@@ -200,6 +227,9 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
         _hashCode += (isDealWasDiscounted() ? Boolean.TRUE : Boolean.FALSE).hashCode();
         if (getDealVariant() != null) {
             _hashCode += getDealVariant().hashCode();
+        }
+        if (getDealAdditionalServices() != null) {
+            _hashCode += getDealAdditionalServices().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -245,6 +275,13 @@ public class PostBuyFormItemDealsStruct  implements java.io.Serializable {
         elemField.setFieldName("dealVariant");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "dealVariant"));
         elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "PostBuyFormItemDealsVariantStruct"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("dealAdditionalServices");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "dealAdditionalServices"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfPostbuyformitemdealsadditionalservicestruct"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

@@ -26,6 +26,8 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
 
     private java.lang.Integer getAfterSalesServiceConditions;
 
+    private java.lang.Integer getEan;
+
     public DoShowItemInfoExtRequest() {
     }
 
@@ -38,7 +40,8 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
            java.lang.Integer getPostageOptions,
            java.lang.Integer getCompanyInfo,
            java.lang.Integer getProductInfo,
-           java.lang.Integer getAfterSalesServiceConditions) {
+           java.lang.Integer getAfterSalesServiceConditions,
+           java.lang.Integer getEan) {
            this.sessionHandle = sessionHandle;
            this.itemId = itemId;
            this.getDesc = getDesc;
@@ -48,6 +51,7 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
            this.getCompanyInfo = getCompanyInfo;
            this.getProductInfo = getProductInfo;
            this.getAfterSalesServiceConditions = getAfterSalesServiceConditions;
+           this.getEan = getEan;
     }
 
 
@@ -230,6 +234,26 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
         this.getAfterSalesServiceConditions = getAfterSalesServiceConditions;
     }
 
+
+    /**
+     * Gets the getEan value for this DoShowItemInfoExtRequest.
+     * 
+     * @return getEan
+     */
+    public java.lang.Integer getGetEan() {
+        return getEan;
+    }
+
+
+    /**
+     * Sets the getEan value for this DoShowItemInfoExtRequest.
+     * 
+     * @param getEan
+     */
+    public void setGetEan(java.lang.Integer getEan) {
+        this.getEan = getEan;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof DoShowItemInfoExtRequest)) return false;
@@ -266,7 +290,10 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
               this.getProductInfo.equals(other.getGetProductInfo()))) &&
             ((this.getAfterSalesServiceConditions==null && other.getGetAfterSalesServiceConditions()==null) || 
              (this.getAfterSalesServiceConditions!=null &&
-              this.getAfterSalesServiceConditions.equals(other.getGetAfterSalesServiceConditions())));
+              this.getAfterSalesServiceConditions.equals(other.getGetAfterSalesServiceConditions()))) &&
+            ((this.getEan==null && other.getGetEan()==null) || 
+             (this.getEan!=null &&
+              this.getEan.equals(other.getGetEan())));
         __equalsCalc = null;
         return _equals;
     }
@@ -302,6 +329,9 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
         }
         if (getGetAfterSalesServiceConditions() != null) {
             _hashCode += getGetAfterSalesServiceConditions().hashCode();
+        }
+        if (getGetEan() != null) {
+            _hashCode += getGetEan().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -370,6 +400,13 @@ public class DoShowItemInfoExtRequest  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("getAfterSalesServiceConditions");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "getAfterSalesServiceConditions"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("getEan");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "getEan"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

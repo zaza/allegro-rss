@@ -8,7 +8,6 @@
 package com.allegro.webapi;
 
 public interface ServicePort_PortType extends java.rmi.Remote {
-    public com.allegro.webapi.DoAddDescToItemsResponse doAddDescToItems(com.allegro.webapi.DoAddDescToItemsRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoAddPackageInfoToPostBuyFormResponse doAddPackageInfoToPostBuyForm(com.allegro.webapi.DoAddPackageInfoToPostBuyFormRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoAddToBlackListResponse doAddToBlackList(com.allegro.webapi.DoAddToBlackListRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoBidItemResponse doBidItem(com.allegro.webapi.DoBidItemRequest parameters) throws java.rmi.RemoteException;
@@ -36,8 +35,6 @@ public interface ServicePort_PortType extends java.rmi.Remote {
     public com.allegro.webapi.DoGetCatsDataLimitResponse doGetCatsDataLimit(com.allegro.webapi.DoGetCatsDataLimitRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoGetCountriesResponse doGetCountries(com.allegro.webapi.DoGetCountriesRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoGetDealsResponse doGetDeals(com.allegro.webapi.DoGetDealsRequest parameters) throws java.rmi.RemoteException;
-    public com.allegro.webapi.DoGetFavouriteCategoriesResponse doGetFavouriteCategories(com.allegro.webapi.DoGetFavouriteCategoriesRequest parameters) throws java.rmi.RemoteException;
-    public com.allegro.webapi.DoGetFavouriteSellersResponse doGetFavouriteSellers(com.allegro.webapi.DoGetFavouriteSellersRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoGetFeedbackResponse doGetFeedback(com.allegro.webapi.DoGetFeedbackRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoGetFilledPostBuyFormsResponse doGetFilledPostBuyForms(com.allegro.webapi.DoGetFilledPostBuyFormsRequest parameters) throws java.rmi.RemoteException;
     public com.allegro.webapi.DoGetFreeDeliveryAmountResponse doGetFreeDeliveryAmount(com.allegro.webapi.DoGetFreeDeliveryAmountRequest parameters) throws java.rmi.RemoteException;

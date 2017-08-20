@@ -38,7 +38,7 @@ class TestableAllegroClient {
 	
 	long getCategoryId(String categoryName) throws RemoteException, ServiceException {
 		List<CatInfoType> categories = Arrays.asList(
-				allegro().doGetCatsData(new DoGetCatsDataRequest(AllegroClient.POLAND, 0L, webApiKey())).getCatsList().getItem());
+				allegro().doGetCatsData(new DoGetCatsDataRequest(AllegroClient.POLAND, 0L, webApiKey(), false)).getCatsList().getItem());
 		return categories.stream().filter(c -> categoryName.equalsIgnoreCase(c.getCatName()))
 				.mapToInt(c -> c.getCatId()).findFirst().getAsInt();
 	}

@@ -70,6 +70,10 @@ public class ItemInfoExt  implements java.io.Serializable {
 
     private int itVatInvoice;
 
+    private int itVatMarginInvoice;
+
+    private int itWithoutVatInvoice;
+
     private java.lang.String itBankAccount1;
 
     private java.lang.String itBankAccount2;
@@ -91,6 +95,8 @@ public class ItemInfoExt  implements java.io.Serializable {
     private java.lang.Integer itIsBrandZone;
 
     private java.lang.Integer itIsFulfillmentTimeActive;
+
+    private java.lang.String itEan;
 
     public ItemInfoExt() {
     }
@@ -127,6 +133,8 @@ public class ItemInfoExt  implements java.io.Serializable {
            long itHitCount,
            java.lang.String itPostcode,
            int itVatInvoice,
+           int itVatMarginInvoice,
+           int itWithoutVatInvoice,
            java.lang.String itBankAccount1,
            java.lang.String itBankAccount2,
            int itStartingQuantity,
@@ -137,7 +145,8 @@ public class ItemInfoExt  implements java.io.Serializable {
            int itIsAllegroStandard,
            int itIsNewUsed,
            java.lang.Integer itIsBrandZone,
-           java.lang.Integer itIsFulfillmentTimeActive) {
+           java.lang.Integer itIsFulfillmentTimeActive,
+           java.lang.String itEan) {
            this.itId = itId;
            this.itCountry = itCountry;
            this.itName = itName;
@@ -169,6 +178,8 @@ public class ItemInfoExt  implements java.io.Serializable {
            this.itHitCount = itHitCount;
            this.itPostcode = itPostcode;
            this.itVatInvoice = itVatInvoice;
+           this.itVatMarginInvoice = itVatMarginInvoice;
+           this.itWithoutVatInvoice = itWithoutVatInvoice;
            this.itBankAccount1 = itBankAccount1;
            this.itBankAccount2 = itBankAccount2;
            this.itStartingQuantity = itStartingQuantity;
@@ -180,6 +191,7 @@ public class ItemInfoExt  implements java.io.Serializable {
            this.itIsNewUsed = itIsNewUsed;
            this.itIsBrandZone = itIsBrandZone;
            this.itIsFulfillmentTimeActive = itIsFulfillmentTimeActive;
+           this.itEan = itEan;
     }
 
 
@@ -804,6 +816,46 @@ public class ItemInfoExt  implements java.io.Serializable {
 
 
     /**
+     * Gets the itVatMarginInvoice value for this ItemInfoExt.
+     * 
+     * @return itVatMarginInvoice
+     */
+    public int getItVatMarginInvoice() {
+        return itVatMarginInvoice;
+    }
+
+
+    /**
+     * Sets the itVatMarginInvoice value for this ItemInfoExt.
+     * 
+     * @param itVatMarginInvoice
+     */
+    public void setItVatMarginInvoice(int itVatMarginInvoice) {
+        this.itVatMarginInvoice = itVatMarginInvoice;
+    }
+
+
+    /**
+     * Gets the itWithoutVatInvoice value for this ItemInfoExt.
+     * 
+     * @return itWithoutVatInvoice
+     */
+    public int getItWithoutVatInvoice() {
+        return itWithoutVatInvoice;
+    }
+
+
+    /**
+     * Sets the itWithoutVatInvoice value for this ItemInfoExt.
+     * 
+     * @param itWithoutVatInvoice
+     */
+    public void setItWithoutVatInvoice(int itWithoutVatInvoice) {
+        this.itWithoutVatInvoice = itWithoutVatInvoice;
+    }
+
+
+    /**
      * Gets the itBankAccount1 value for this ItemInfoExt.
      * 
      * @return itBankAccount1
@@ -1022,6 +1074,26 @@ public class ItemInfoExt  implements java.io.Serializable {
         this.itIsFulfillmentTimeActive = itIsFulfillmentTimeActive;
     }
 
+
+    /**
+     * Gets the itEan value for this ItemInfoExt.
+     * 
+     * @return itEan
+     */
+    public java.lang.String getItEan() {
+        return itEan;
+    }
+
+
+    /**
+     * Sets the itEan value for this ItemInfoExt.
+     * 
+     * @param itEan
+     */
+    public void setItEan(java.lang.String itEan) {
+        this.itEan = itEan;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof ItemInfoExt)) return false;
@@ -1081,6 +1153,8 @@ public class ItemInfoExt  implements java.io.Serializable {
              (this.itPostcode!=null &&
               this.itPostcode.equals(other.getItPostcode()))) &&
             this.itVatInvoice == other.getItVatInvoice() &&
+            this.itVatMarginInvoice == other.getItVatMarginInvoice() &&
+            this.itWithoutVatInvoice == other.getItWithoutVatInvoice() &&
             ((this.itBankAccount1==null && other.getItBankAccount1()==null) || 
              (this.itBankAccount1!=null &&
               this.itBankAccount1.equals(other.getItBankAccount1()))) &&
@@ -1099,7 +1173,10 @@ public class ItemInfoExt  implements java.io.Serializable {
               this.itIsBrandZone.equals(other.getItIsBrandZone()))) &&
             ((this.itIsFulfillmentTimeActive==null && other.getItIsFulfillmentTimeActive()==null) || 
              (this.itIsFulfillmentTimeActive!=null &&
-              this.itIsFulfillmentTimeActive.equals(other.getItIsFulfillmentTimeActive())));
+              this.itIsFulfillmentTimeActive.equals(other.getItIsFulfillmentTimeActive()))) &&
+            ((this.itEan==null && other.getItEan()==null) || 
+             (this.itEan!=null &&
+              this.itEan.equals(other.getItEan())));
         __equalsCalc = null;
         return _equals;
     }
@@ -1158,6 +1235,8 @@ public class ItemInfoExt  implements java.io.Serializable {
             _hashCode += getItPostcode().hashCode();
         }
         _hashCode += getItVatInvoice();
+        _hashCode += getItVatMarginInvoice();
+        _hashCode += getItWithoutVatInvoice();
         if (getItBankAccount1() != null) {
             _hashCode += getItBankAccount1().hashCode();
         }
@@ -1176,6 +1255,9 @@ public class ItemInfoExt  implements java.io.Serializable {
         }
         if (getItIsFulfillmentTimeActive() != null) {
             _hashCode += getItIsFulfillmentTimeActive().hashCode();
+        }
+        if (getItEan() != null) {
+            _hashCode += getItEan().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -1375,6 +1457,18 @@ public class ItemInfoExt  implements java.io.Serializable {
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itVatMarginInvoice");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itVatMarginInvoice"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itWithoutVatInvoice");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itWithoutVatInvoice"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("itBankAccount1");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itBankAccount1"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
@@ -1439,6 +1533,13 @@ public class ItemInfoExt  implements java.io.Serializable {
         elemField.setFieldName("itIsFulfillmentTimeActive");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itIsFulfillmentTimeActive"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itEan");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itEan"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

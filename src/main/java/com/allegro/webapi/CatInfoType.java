@@ -18,6 +18,8 @@ public class CatInfoType  implements java.io.Serializable {
 
     private int catIsProductCatalogueEnabled;
 
+    private java.lang.Boolean catIsLeaf;
+
     public CatInfoType() {
     }
 
@@ -26,12 +28,14 @@ public class CatInfoType  implements java.io.Serializable {
            java.lang.String catName,
            int catParent,
            int catPosition,
-           int catIsProductCatalogueEnabled) {
+           int catIsProductCatalogueEnabled,
+           java.lang.Boolean catIsLeaf) {
            this.catId = catId;
            this.catName = catName;
            this.catParent = catParent;
            this.catPosition = catPosition;
            this.catIsProductCatalogueEnabled = catIsProductCatalogueEnabled;
+           this.catIsLeaf = catIsLeaf;
     }
 
 
@@ -134,6 +138,26 @@ public class CatInfoType  implements java.io.Serializable {
         this.catIsProductCatalogueEnabled = catIsProductCatalogueEnabled;
     }
 
+
+    /**
+     * Gets the catIsLeaf value for this CatInfoType.
+     * 
+     * @return catIsLeaf
+     */
+    public java.lang.Boolean getCatIsLeaf() {
+        return catIsLeaf;
+    }
+
+
+    /**
+     * Sets the catIsLeaf value for this CatInfoType.
+     * 
+     * @param catIsLeaf
+     */
+    public void setCatIsLeaf(java.lang.Boolean catIsLeaf) {
+        this.catIsLeaf = catIsLeaf;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof CatInfoType)) return false;
@@ -152,7 +176,10 @@ public class CatInfoType  implements java.io.Serializable {
               this.catName.equals(other.getCatName()))) &&
             this.catParent == other.getCatParent() &&
             this.catPosition == other.getCatPosition() &&
-            this.catIsProductCatalogueEnabled == other.getCatIsProductCatalogueEnabled();
+            this.catIsProductCatalogueEnabled == other.getCatIsProductCatalogueEnabled() &&
+            ((this.catIsLeaf==null && other.getCatIsLeaf()==null) || 
+             (this.catIsLeaf!=null &&
+              this.catIsLeaf.equals(other.getCatIsLeaf())));
         __equalsCalc = null;
         return _equals;
     }
@@ -171,6 +198,9 @@ public class CatInfoType  implements java.io.Serializable {
         _hashCode += getCatParent();
         _hashCode += getCatPosition();
         _hashCode += getCatIsProductCatalogueEnabled();
+        if (getCatIsLeaf() != null) {
+            _hashCode += getCatIsLeaf().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -209,6 +239,13 @@ public class CatInfoType  implements java.io.Serializable {
         elemField.setFieldName("catIsProductCatalogueEnabled");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "catIsProductCatalogueEnabled"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("catIsLeaf");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "catIsLeaf"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

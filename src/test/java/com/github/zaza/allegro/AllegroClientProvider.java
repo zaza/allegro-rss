@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.xml.rpc.ServiceException;
 
+import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -27,6 +28,7 @@ class AllegroClientProvider {
 	}
 
 	AllegroClient getClient(String webApiKey) {
+		Preconditions.checkNotNull(webApiKey, "must provide webApiKey, check environment variables");
 		try {
 			return cache.get(webApiKey);
 		} catch (ExecutionException e) {

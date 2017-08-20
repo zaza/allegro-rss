@@ -1,5 +1,5 @@
 /**
- * ArrayOfFavouritescategoriesstruct.java
+ * ArrayOfPostbuyformitemdealsadditionalservicestruct.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,49 +7,49 @@
 
 package com.allegro.webapi;
 
-public class ArrayOfFavouritescategoriesstruct  implements java.io.Serializable {
-    private com.allegro.webapi.FavouritesCategoriesStruct[] item;
+public class ArrayOfPostbuyformitemdealsadditionalservicestruct  implements java.io.Serializable {
+    private com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct[] item;
 
-    public ArrayOfFavouritescategoriesstruct() {
+    public ArrayOfPostbuyformitemdealsadditionalservicestruct() {
     }
 
-    public ArrayOfFavouritescategoriesstruct(
-           com.allegro.webapi.FavouritesCategoriesStruct[] item) {
+    public ArrayOfPostbuyformitemdealsadditionalservicestruct(
+           com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct[] item) {
            this.item = item;
     }
 
 
     /**
-     * Gets the item value for this ArrayOfFavouritescategoriesstruct.
+     * Gets the item value for this ArrayOfPostbuyformitemdealsadditionalservicestruct.
      * 
      * @return item
      */
-    public com.allegro.webapi.FavouritesCategoriesStruct[] getItem() {
+    public com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct[] getItem() {
         return item;
     }
 
 
     /**
-     * Sets the item value for this ArrayOfFavouritescategoriesstruct.
+     * Sets the item value for this ArrayOfPostbuyformitemdealsadditionalservicestruct.
      * 
      * @param item
      */
-    public void setItem(com.allegro.webapi.FavouritesCategoriesStruct[] item) {
+    public void setItem(com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct[] item) {
         this.item = item;
     }
 
-    public com.allegro.webapi.FavouritesCategoriesStruct getItem(int i) {
+    public com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct getItem(int i) {
         return this.item[i];
     }
 
-    public void setItem(int i, com.allegro.webapi.FavouritesCategoriesStruct _value) {
+    public void setItem(int i, com.allegro.webapi.PostBuyFormItemDealsAdditionalServiceStruct _value) {
         this.item[i] = _value;
     }
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof ArrayOfFavouritescategoriesstruct)) return false;
-        ArrayOfFavouritescategoriesstruct other = (ArrayOfFavouritescategoriesstruct) obj;
+        if (!(obj instanceof ArrayOfPostbuyformitemdealsadditionalservicestruct)) return false;
+        ArrayOfPostbuyformitemdealsadditionalservicestruct other = (ArrayOfPostbuyformitemdealsadditionalservicestruct) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -89,14 +89,14 @@ public class ArrayOfFavouritescategoriesstruct  implements java.io.Serializable 
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(ArrayOfFavouritescategoriesstruct.class, true);
+        new org.apache.axis.description.TypeDesc(ArrayOfPostbuyformitemdealsadditionalservicestruct.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfFavouritescategoriesstruct"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "ArrayOfPostbuyformitemdealsadditionalservicestruct"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("item");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "item"));
-        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "FavouritesCategoriesStruct"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "PostBuyFormItemDealsAdditionalServiceStruct"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         elemField.setMaxOccursUnbounded(true);
