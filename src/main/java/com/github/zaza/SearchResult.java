@@ -1,6 +1,8 @@
-package com.github.zaza.allegro;
+package com.github.zaza;
 
 import java.util.List;
+
+import com.github.zaza.allegro.Item;
 
 import spark.Request;
 

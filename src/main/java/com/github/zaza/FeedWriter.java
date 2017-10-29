@@ -17,7 +17,6 @@ import com.allegro.webapi.ArrayOfPriceinfotype;
 import com.allegro.webapi.PhotoInfoType;
 import com.allegro.webapi.UserInfoType;
 import com.github.zaza.allegro.Item;
-import com.github.zaza.allegro.SearchResult;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndContentImpl;
 import com.rometools.rome.feed.synd.SyndEntry;

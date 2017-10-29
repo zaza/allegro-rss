@@ -4,11 +4,13 @@ import static spark.Spark.get;
 import static spark.SparkBase.port;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
 import com.github.zaza.allegro.AllegroClient;
-import com.github.zaza.allegro.SearchResult;
+import com.github.zaza.allegro.Item;
+import com.github.zaza.allegro.SearchByStringBuilder;
 import com.rometools.rome.io.FeedException;
 
 import spark.Request;
@@ -22,7 +24,23 @@ public class AllegroRss {
 
 	private static SearchResult searchItems(Request request) throws IOException, FeedException, ServiceException {
 		String webApiKey = request.queryParams("wak");
-		return new AllegroClient(webApiKey).search(request);
+		AllegroClient client = new AllegroClient(webApiKey);
+		String string = request.queryParams("string");
+		SearchByStringBuilder searchBuilder = client.searchByString(string);
+		String priceFrom = request.queryParams("price_from");
+		if (priceFrom != null)
+			searchBuilder.priceFrom(Integer.valueOf(priceFrom));
+		String priceTo = request.queryParams("price_to");
+		if (priceTo != null)
+			searchBuilder.priceTo(Integer.valueOf(priceTo));
+		if (request.queryParams("buyUsed") != null)
+			searchBuilder.usedOnly();
+		if (request.queryParams("buyNew") != null)
+			searchBuilder.newOnly();
+		if (request.queryParams("category") != null)
+			searchBuilder.categoryId(Integer.parseInt(request.queryParams("category")));
+		List<Item> items = searchBuilder.search();
+		return new SearchResult(request, string, items);
 	}
 
 	private static String writeFeed(SearchResult result) throws IOException, FeedException {
