@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.allegro.webapi.ArrayOfPhotoinfotype;
 import com.allegro.webapi.ArrayOfPriceinfotype;
 import com.allegro.webapi.PhotoInfoType;
 import com.allegro.webapi.UserInfoType;
@@ -68,23 +67,22 @@ public class FeedWriter {
 		sb.append(formatPriceInfo(item.getPriceInfo()));
 		sb.append(formatTime(item.getTimeToEnd(), item.getEndingTime()));
 		sb.append(formatLocation(item));
-		sb.append(formatPhotosInfo(item.getPhotosInfo()));
+		sb.append(formatPhotosInfo(item.getPhotos()));
 		description.setValue(sb.toString());
 		return description;
 	}
 
-	private String formatPhotosInfo(ArrayOfPhotoinfotype photosInfo) {
-		if (photosInfo.getItem().length > 0) {
-			for (PhotoInfoType photo : photosInfo.getItem()) {
-				if (photo.isPhotoIsMain())
-					return asImg(photo);
-			}
-			// if no main photo found, use the first one
-			return asImg(photosInfo.getItem(0));
+	private String formatPhotosInfo(List<PhotoInfoType> photos) {
+		if (photos.isEmpty())
+			return "";
+		for (PhotoInfoType photo : photos) {
+			if (photo.isPhotoIsMain())
+				return asImg(photo);
 		}
-		return "";
+		// if no main photo found, use the first one
+		return asImg(photos.get(0));
 	}
-	
+
 	private String asImg(PhotoInfoType photo) {
 		return format("<img src=\"%s\" width=\"128\" height=\"96\" alt=\"\" ><br />", photo.getPhotoUrl());
 	}
@@ -104,7 +102,7 @@ public class FeedWriter {
 	private String formatPriceInfo(ArrayOfPriceinfotype priceInfo) {
 		return format("Cena: %.2f zł<br />", priceInfo.getItem(0).getPriceValue());
 	}
-	
+
 	private String formatLocation(Item item) {
 		return format("Lokalizacja: %s (%s)<br />", item.getLocation(), item.getState());
 	}

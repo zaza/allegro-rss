@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.rpc.ServiceException;
 
 import com.github.zaza.allegro.AllegroClient;
+import com.github.zaza.allegro.Condition;
 import com.github.zaza.allegro.Item;
 import com.github.zaza.allegro.SearchByStringBuilder;
 import com.rometools.rome.io.FeedException;
@@ -34,9 +35,9 @@ public class AllegroRss {
 		if (priceTo != null)
 			searchBuilder.priceTo(Integer.valueOf(priceTo));
 		if (request.queryParams("buyUsed") != null)
-			searchBuilder.usedOnly();
+			searchBuilder.condition(Condition.USED);
 		if (request.queryParams("buyNew") != null)
-			searchBuilder.newOnly();
+			searchBuilder.condition(Condition.NEW);
 		if (request.queryParams("category") != null)
 			searchBuilder.categoryId(Integer.parseInt(request.queryParams("category")));
 		List<Item> items = searchBuilder.search();
